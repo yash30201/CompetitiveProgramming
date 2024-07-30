@@ -57,7 +57,7 @@ save_file_on_execution=false
 save_tests=true
 show_compile_and_run_only=false
 show_only_monospaced_font=true
-splitter_size=@ByteArray()
+splitter_size=@ByteArray(\0\0\0\xff\0\0\0\x1\0\0\0\x2\0\0\x3\xa7\0\0\x3\xad\x1\xff\xff\xff\xff\x1\0\0\0\x1\0)
 tab_jump_out_parentheses=true
 tab_width=4
 test_case_maximum_height=300
@@ -77,7 +77,7 @@ show_toast_messages=true
 [clang_format]
 arguments=
 program=clang-format
-style=BasedOnStyle: Google
+style=BasedOnStyle: Google\nIndentWidth: 4\nAccessModifierOffset: -4\nKeepEmptyLinesAtEOF: true\nMaxEmptyLinesToKeep: 1000
 
 [competitive_companion]
 connection_port=10045

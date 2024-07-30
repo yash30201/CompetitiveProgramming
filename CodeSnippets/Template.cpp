@@ -16,6 +16,11 @@ using ordered_set = tree<
     tree_order_statistics_node_update
 >;
 
+using vi = vector<int>;
+using vll = vector<long long>;
+using pii = pair<int, int>;
+using pll = pair<long long, long long>;
+
 template <typename T>
 using _v = vector<T>;
 
