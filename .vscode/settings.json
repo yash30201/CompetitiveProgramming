@@ -3,5 +3,8 @@
     "C_Cpp.inlayHints.parameterNames.suppressWhenArgumentContainsName": false,
     "C_Cpp.default.compilerArgs": [
         "-DDEBUG -Wall -Wextra -std=c++17 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op  -Wshift-overflow=2 -Wduplicated-cond -Wcast-equal -Wcase-align -ggdb3 -fmax-errors=2 -D_GLIBCXX_ASSERTIONS"
-    ]
+    ],
+    "files.associations": {
+        "iostream": "cpp"
+    }
 }
