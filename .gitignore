@@ -7,3 +7,5 @@
 *.dylib
 *.a
 *.lib
+*.out.*
+*.plist
