@@ -5,7 +5,7 @@ using namespace std;
 class FenwickTree{
     vector<int> t;
     int n;
-    
+
     inline int calc(int x, int y) {return x + y;}
 
     inline int impose(int bigger, int smaller) {
