@@ -103,8 +103,7 @@ These trees use bitwise operations to calculate indices and store things efficie
           i.e., j = "X" + "010000", then j > i and g(j) = "X" + "0" * 6 < i;
         - Moving onto the bit manipulations, last set bit is fetched through `i & (-i)`.
         - Hence `g[i] = i - (i & (-i))` and `h[i] = i + (i & (-i))`.
-      - For range update and point query:
+      - [Binary Index Tree](./CodeSnippets/SegmentTrees/FenwickRangeUpdatePointQuery.cpp): Range Update or Point Query:
         - We can do this via hacks
         - For update to range [l, r] by x each, we do `add(l, x)` and `add(r + 1, -x)`
         - For getting the point value of a[i], the answer would be `prefix_sum(i)`
-        - [Code](./CodeSnippets/SegmentTrees/FenwickRangeUpdatePointQuery.cpp)
