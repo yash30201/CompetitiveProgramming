@@ -108,5 +108,12 @@ These trees use bitwise operations to calculate indices and store things efficie
         - For update to range [l, r] by x each, we do `add(l, x)` and `add(r + 1, -x)`
         - For getting the point value of a[i], the answer would be `prefix_sum(i)`
       - [Binary Index Tree](./CodeSnippets/SegmentTrees/FenwickTreeRangeUpdateRangeQuery.cpp)
-        - Let's think about the scenario
+        - Let's think about the scenario, where we update a range `[l, r]` by x, then sum of a
+          prefix i can be described as follows: <br/>
          ![alt text](Assets/image.png)
+        - We can write the sum as follows then: <br/>
+         ![alt text](Assets/image1.png)
+        - Now we can write the prefix sum as sum of two BIT tree B1 and B2 as
+          - `sum[0, i] = sum(B1, i) * i - sum(B2, i)`, where
+          - B1 contains updates in the form of `x`
+          - B2 contains updates in the form of `x * (i - 1)`
