@@ -74,6 +74,8 @@ These trees use bitwise operations to calculate indices and store things efficie
           , hence we just thake it's value and move to a more complete range.
     - [Binary Indexed Tree](./CodeSnippets/SegmentTrees/FenwickTree.cpp)
       - Uses N memory
+      - Used to store modifications, it's best get the result value by summing array value and
+        modification value.
       - Each index stores the value of the range some [g(i), i]. For a zero indexed tree
         - g(i) is defined as removing the rightmost set bits starting from the right most index.
           If there are no set bits from the right, then do nothing.
@@ -101,3 +103,8 @@ These trees use bitwise operations to calculate indices and store things efficie
           i.e., j = "X" + "010000", then j > i and g(j) = "X" + "0" * 6 < i;
         - Moving onto the bit manipulations, last set bit is fetched through `i & (-i)`.
         - Hence `g[i] = i - (i & (-i))` and `h[i] = i + (i & (-i))`.
+      - For range update and point query:
+        - We can do this via hacks
+        - For update to range [l, r] by x each, we do `add(l, x)` and `add(r + 1, -x)`
+        - For getting the point value of a[i], the answer would be `prefix_sum(i)`
+        - [Code](./CodeSnippets/SegmentTrees/FenwickRangeUpdatePointQuery.cpp)
