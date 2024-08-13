@@ -7,5 +7,7 @@
 *.dylib
 *.a
 *.lib
+*.ans
+*.in
 *.out.*
 *.plist
