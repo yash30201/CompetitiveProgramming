@@ -88,3 +88,32 @@ These trees use bitwise operations to calculate indices and store things efficie
   - `sum[0, i] = sum(B1, i) * i - sum(B2, i)`, where
   - B1 contains updates in the form of `x`
   - B2 contains updates in the form of `x * (i - 1)`
+
+## Dynamic Programming
+
+Nothing for notes as such,just remember
+
+- When calculating some `ith` state, if you need to find the max of all smaller / greater element than i'th, then use
+  binary search or set or segment tree.
+- Some nice questions to know advance patterns:
+  - [CSES: Elevator](https://cses.fi/problemset/task/1653)
+
+## Array
+
+This section mostly contains algorithms related to arrays
+
+### Longest Increasing Subsequence
+
+Apart from DP, we have a smart `O(nlogn)` solution.
+
+```cpp
+vi lis;
+FORE(i, a) {
+    auto it = lower_bound(all(lis), i);
+    if (it == lis.end())
+        lis.pub(i);
+    else
+        *it = i;
+}
+op(lis.size());
+```
