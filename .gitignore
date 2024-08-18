@@ -11,3 +11,6 @@
 *.in
 *.out.*
 *.plist
+*.prob
+*.bin
+*.yml
