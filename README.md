@@ -23,6 +23,37 @@ This repository contains all my notes and snippets related to competitive progra
 
 Basic segment tree with range query and point update.
 
+- Segment Trees can be used in descending the tree mode!
+  - See [code](./CodeForces/1520.cpp)
+  - Another example would be to get the index whose predix sum is greater than equal to k
+    - Obviously the array can have updations otherwise we can just create a prefix array with
+      binary search.
+- Ranged Maximum subarray sum queries [code](./SPOJ/GSS3.cpp)
+- **We can store the whole subtree in nodes**
+  - This will result in a memory of **O(NlogN), not O(N^2)**
+  - We can store the node data in special data structures like multiset to achive more functionality.
+    - This is called **merge sort tree**.
+  - Example Q: Find the smallest number greater or equal to a specified number with modification queries
+
+### Segment Tree: Lazy Propagation
+
+This segment tree allows range updates and range queries both in log(n) time. You probably need
+to **use lazy propagation whenever you require range updates**!
+
+The crux behind the DS is in the following two points:
+
+- If in a particular range update query, we are at a range `[l, r)` which is completely
+  inside the update query range, then we will just update the lazy array index for this
+  range and return.
+- Now whenever you are descending into the tree, for each node in your path, just **push** the current
+  lazy operation present in the lazy array down for both of it's children. This would be a `O(1)`
+  operation assuming applying changes take `O(1)`.
+- Example usage: [code](./CodeForces/1114F.cpp)
+
+### Persistent Segment Trees
+
+TODO
+
 ### Bit Trees
 
 These trees use bitwise operations to calculate indices and store things efficiently.
