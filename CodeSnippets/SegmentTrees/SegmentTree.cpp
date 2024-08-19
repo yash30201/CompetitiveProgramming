@@ -2,63 +2,47 @@
 
 using namespace std;
 
-class SegmentTree{
+struct SegmentTree {
     int n;
     vector<int> t;
-    
-    inline int calc(int x, int y) {
-        return x + y;
-    }
 
-    void build(vector<int> &a, int i, int l, int r) {
+    void build(int i, int l, int r, const vector<int> &a) {
         if (r - l == 1) {
             t[i] = a[l];
             return;
         }
-        int m = (r + l) >> 1;
-        build(a, i << 1, l, m);
-        build(a, i << 1 | 1, m, r);
-        t[i] = calc(t[i << 1], t[i << 1 | 1]);
+        int m = (l + r) >> 1;
+        build(i << 1, l, m, a);
+        build(i << 1 | 1, m, r, a);
+        t[i] = t[i << 1] + t[i << 1 | 1];
     }
-
-    void pointUpdateImpl(int i, int l, int r, int pos, int val) {
+    SegmentTree(vector<int> &a) {
+        n = a.size();
+        t.resize(n << 2);
+        build(1, 0, n, a);
+    }
+    void update(int i, int l, int r, int idx, int val) {
         if (r - l == 1) {
             t[i] = val;
             return;
         }
-        int m = (r + l) >> 1;
-        if (pos < m) pointUpdateImpl(i << 1, l, m, pos, val);
-        else pointUpdateImpl(i<<1 | 1, m, r, pos, val);
-        t[i] = calc(t[i << 1], t[i << 1 | 1]);
-    }
-
-    int rangeQueryImpl(int i, int l, int r, int tl, int tr) {
-        if (l >= tr || r <= tl) return 0;
-        if (l >= tl && r <= tr) return t[i];
         int m = (l + r) >> 1;
-        return calc(
-            rangeQueryImpl(i << 1, l, m, tl, tr),
-            rangeQueryImpl(i << 1 | 1, m, r, tl ,tr)
-        );
+        if (idx < m) update(i << 1, l, m, idx, val);
+        else update(i << 1 | 1, m, r, idx, val);
+        t[i] = t[i << 1] + t[i << 1 | 1];
     }
-public:
-    SegmentTree(vector<int> &a) {
-        n = a.size();
-        t.resize(n * 4 + 5);
-        build(a, 1, 0, n);
+    void update(int idx, int val) {
+        update(1, 0, n, idx, val);
     }
-
-    SegmentTree(int nn) {
-        this->n = nn;
-        t.assign(n * 4 + 5, 0);
+    int query(int i, int lx, int rx, int l, int r) {
+        if (lx >= r || rx <= l) return 0;
+        if (lx >= l && rx <= r) return t[i];
+        int m = (lx + rx) >> 1;
+        return query(i << 1, lx, m, l, r)
+            + query(i << 1 | 1, m, rx, l, r);
     }
-
-    void update(int pos, int val) {
-        pointUpdateImpl(1, 0, n, pos, val);
-    }
-
-    int query(int l, int r) { // [l, r)
-        return rangeQueryImpl(1, 0, n, l, r);
+    int query(int l, int r) {
+        return query(1, 0, n, l, r);
     }
 };
 
