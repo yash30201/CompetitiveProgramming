@@ -19,7 +19,7 @@ This repository contains all my notes and snippets related to competitive progra
 
 ## Trees
 
-### [Segment Tree](./CodeSnippets/SegmentTrees/SegmentTree.cpp)
+### [Segment Tree](./CodeSnippets/Trees/SegmentTree.cpp)
 
 Basic segment tree with range query and point update.
 
@@ -35,7 +35,7 @@ Basic segment tree with range query and point update.
     - This is called **merge sort tree**.
   - Example Q: Find the smallest number greater or equal to a specified number with modification queries
 
-### Segment Tree: Lazy Propagation
+### [Segment Tree](./CodeSnippets/Trees/SegmentTreeLazyPush.cpp): Lazy Propagation
 
 This segment tree allows range updates and range queries both in log(n) time. You probably need
 to **use lazy propagation whenever you require range updates**!
@@ -58,7 +58,7 @@ TODO
 
 These trees use bitwise operations to calculate indices and store things efficiently.
 
-#### [Iterative Segment Tree](./CodeSnippets/SegmentTrees/IterativeSegmentTree.cpp)
+#### [Iterative Segment Tree](./CodeSnippets/Trees/IterativeSegmentTree.cpp)
 
 - Uses 2N memory
 - Actual array is stored from [n, 2n)
@@ -69,7 +69,7 @@ These trees use bitwise operations to calculate indices and store things efficie
   - Then for every l, r, if they are odd, that means, it isn't covered in a whole range
     , hence we just thake it's value and move to a more complete range.
 
-#### [Binary Indexed Tree](./CodeSnippets/SegmentTrees/FenwickTree.cpp)
+#### [Binary Indexed Tree](./CodeSnippets/Trees/FenwickTree.cpp)
 
 - Uses N memory
 - Used to store modifications, it's best get the result value by summing array value and
@@ -101,14 +101,14 @@ These trees use bitwise operations to calculate indices and store things efficie
     i.e., j = "X" + "010000", then j > i and g(j) = "X" + "0" * 6 < i;
   - Moving onto the bit manipulations, last set bit is fetched through `i & (-i)`.
   - Hence `g[i] = i - (i & (-i))` and `h[i] = i + (i & (-i))`.
-  
-#### [Binary Index Tree](./CodeSnippets/SegmentTrees/FenwickRangeUpdatePointQuery.cpp) Range Update Point Query
+
+#### [Binary Indexed Tree](./CodeSnippets/Trees/FenwickRangeUpdatePointQuery.cpp) Range Update Point Query
 
 - We can do this via hacks
 - For update to range [l, r] by x each, we do `add(l, x)` and `add(r + 1, -x)`
 - For getting the point value of a[i], the answer would be `prefix_sum(i)`
 
-#### [Binary Index Tree](./CodeSnippets/SegmentTrees/FenwickTreeRangeUpdateRangeQuery.cpp): Range Update Range Query
+#### [Binary Indexed Tree](./CodeSnippets/Trees/FenwickTreeRangeUpdateRangeQuery.cpp): Range Update Range Query
 
 - Let's think about the scenario, where we update a range `[l, r]` by x, then sum of a
   prefix i can be described as follows: <br/>
@@ -119,6 +119,10 @@ These trees use bitwise operations to calculate indices and store things efficie
   - `sum[0, i] = sum(B1, i) * i - sum(B2, i)`, where
   - B1 contains updates in the form of `x`
   - B2 contains updates in the form of `x * (i - 1)`
+
+#### [Binary Indexed Tree](./CodeSnippets/Trees/FenwickTree2D.cpp): 2 Dimensions
+
+This is relatively simpler to implement compared to segment trees for 2 dimensions.
 
 ## Dynamic Programming
 
