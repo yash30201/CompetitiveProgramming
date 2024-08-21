@@ -10,14 +10,14 @@ void FastIO() {
 }
 
 struct Node {
-    Node *l, *r;
+    Node *left, *right;
     int sum, lazy;
-    Node(int val): sum(val), l(nullptr), r(nullptr), lazy(0) {}
-    Node(Node* l, Node *r): l(l), r(r), sum(0), lazy(0) {
-        if (l) sum += l->sum;
-        if (r) sum += r->sum;
+    Node(int val): sum(val), left(nullptr), right(nullptr), lazy(0) {}
+    Node(Node* l, Node *r): left(l), right(r), sum(0), lazy(0) {
+        if (left) sum += left->sum;
+        if (left) sum += right->sum;
     }
-    Node(Node* l, Node *r, int sum, int lazy): l(l), r(r), sum(sum), lazy(lazy) {}
+    Node(Node* l, Node *r, int sum, int lazy): left(l), right(r), sum(sum), lazy(lazy) {}
 };
 struct PersistentSegmentTree {
     vector<Node*> versions;
@@ -34,23 +34,23 @@ struct PersistentSegmentTree {
 
     void push(Node* node, int l, int m, int r) {
         if (node->lazy == 0) return;
-        if (node->l) {
-            node->l->sum += node->lazy * (m - l);
-            node->l->lazy += node->lazy;
+        if (node->left) {
+            node->left->sum += node->lazy * (m - l);
+            node->left->lazy += node->lazy;
         }
-        if (node->r) {
-            node->r->sum += node->lazy * (r - m);
-            node->r->lazy += node->lazy;
+        if (node->right) {
+            node->right->sum += node->lazy * (r - m);
+            node->right->lazy += node->lazy;
         }
         node->lazy = 0;
     }
 
     Node* update(Node* node, int l, int r, int L, int R, int val) {
-        if (l >= R || r <= L) return nullptr;
+        if (l >= R || r <= L) return node;
         if (l >= L && r <= R) {
             return new Node(
-                node->l,
-                node->r,
+                node->left,
+                node->right,
                 node->sum + (r - l) * val,
                 node->lazy + val);
         }
@@ -72,8 +72,8 @@ struct PersistentSegmentTree {
         if (l >= L && r <= R) return node->sum;
         int m = (l + r) >> 1;
         push(node, l, m, r);
-        return get(node->l, l, m, L, R);
-            + get(node->r, m, r, L, R);
+        return get(node->left, l, m, L, R) 
+            + get(node->right, m, r, L, R);
     }
 
     int get(int l, int r, int version_id = -1) {
@@ -84,5 +84,12 @@ struct PersistentSegmentTree {
 
 int main() {
     FastIO();
+    vector<int> a{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    PersistentSegmentTree st(a);
+    assert(st.get(1, 6) == 20);
+    st.update(2, 5, 10);
+    assert(st.get(1, 7) == 57);
+    assert(st.get(1, 4, 0) == 9);
+    cout << "Test Passed\n";
     return 0;
 }

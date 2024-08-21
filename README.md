@@ -52,7 +52,21 @@ The crux behind the DS is in the following two points:
 
 ### Persistent Segment Trees
 
-TODO
+Firstly, think of a normal segment tree implementation with nodes as pointer to some node structure.
+Now, in this tree, whenever we update some node, instead of updating the node, we create a new node with
+the updated value and pass it on above. The above node again creates a new version of current node
+and passes and it goes on. At the end, you get a new node for every update. Atmax there can be `O(height) == O(logN)`
+new node creations per update query.
+
+- => Still all operation works in `O(logN)`
+- => You can store each new root node to get the updated version of the tree.
+- => For any range query [l, r], let's we are in some point at the query step and say we want to calculate
+  do some calulation based on the current node's value, then to get that, we can effectively do
+  latest_version->value - previous_version->value.
+  - This approach is useful in calculating numbers greater than k in [l, r] range.
+  - Example [code](./SPOJ/KQUERY.cpp)
+- Similary, a Persistent Segment Tree for range sum and range update (by some constant value) operations
+  is implemented [here](./CodeSnippets/Trees/PersistentSegmentTree.cpp).
 
 ### Bit Trees
 
