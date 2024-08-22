@@ -5,7 +5,8 @@
         "-DDEBUG -Wall -Wextra -std=c++17 -Wshadow -Wformat=2 -Wfloat-equal -Wconversion -Wlogical-op  -Wshift-overflow=2 -Wduplicated-cond -Wcast-equal -Wcase-align -ggdb3 -fmax-errors=2 -D_GLIBCXX_ASSERTIONS"
     ],
     "files.associations": {
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "thread": "cpp"
     },
     "cph.general.saveLocation": "",
     "C_Cpp.errorSquiggles": "disabled"

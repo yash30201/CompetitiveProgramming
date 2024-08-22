@@ -166,3 +166,56 @@ FORE(i, a) {
 }
 op(lis.size());
 ```
+
+## [DSU](./CodeSnippets/Dsu.cpp): Disjoint Set Union
+
+This is a very powerful data structure which would allow managing groups of elements. A classic dsu would have two operations:
+
+- `join(a, b)`: would create union the groups where elements a and b lie.
+- `find(a)`: find the group leader for a particular element. This leader is dymanic and at a point, only one
+  element can be the leader.
+kt
+Classic Implementation would recursively check for the group leaders and take `O(n)` time in worst case. That's why we use two
+optimizations:
+
+- Path Compression
+- Union by size / depth
+
+Both of them are independent of each other and introduce a optimization of `O(logN)` individually. When used together, they make the
+data structure perform is `Amortized O(1)`, meaning a single update might take `O(logN)` worst case but when operations are huge,
+then the average time complexity of all the operations combined take `O(1)`, actually `O(ackerman(n))`.
+
+> O(Ackerman(n)) is nearly 4 for 10^600. This seems intuitive from the fact that O(log(logN)) is < 3 for 10^600
+
+Whenever you see that there is a directed dependency between elements and new dependencies are getting added and dependencies are only 1 outgoing and you want to instantly get the end of path, then think about dsu with just path compression! [code](./SPOJ/CLFLARR.cpp)
+
+### Applications
+
+- **Check Graph Bipartiteness**: You can check graph bipartiteness by joining the vertices which have an edge between them. If at any
+  point of time, the vertices to be joined belong to the same group beforehand **and** that the leader distance parity is same for both, then the graph will voilate bipartiteness! Calculation of parity can be done in the `find` method. <br/>
+  <details>
+  <summary>Hint</summary>
+
+  - For each vertex, also store the parity of it's length from the leader
+  - For find operation
+    - After join operations, it may happen that parent of a vertex isn't the leader right now.
+    - If parent is the leader, then parity of vertex shouldn't change
+    - Else, new parity will be xor of earlier and parent's parity. Reason being, if parent has some x parity to leader, and
+      vertex also had x parity to parent, then the new length would have even length, hence zero parity, otherwise 1
+  - For join operations
+    - Get the leaders of the two
+    - If leaders are same
+      - If parity is same for both, the bipartite becomes false, mark the leader as false
+    - Else, parity becomes xnor of both of them
+  </details>
+- **Arpa's Trick**: Offline RMQ: store parents as next smaller element. For a i, only answer queries with R == i. When go to i + 1, add the
+  edges with next smaller element as i + 1.
+
+> The idea of adding the smaller of the two values to bigger ones and balancing the overall set size
+> is a very prominent concept of Computer Science! This always creates
+> logarithmic complexity with multiple operations. Intuitive prove: Think about a particular element, when it is a part of operation
+> , that means the operations resulted in atleast twice the size of element, next time, it will again grow twice...and so on. Hence over
+> all, asymptotic complexity becomes O(NlogN).
+
+- **Storing all group members in the DSU**: Due to the above thing, the asymptotic complexity of m queries on a dsu with n elements become
+  `O(m + nlogn) asymptotically` <= `O(nlogn)` for the set maintanence, and original `O(1)` for each query.
