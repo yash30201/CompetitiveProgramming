@@ -50,7 +50,7 @@ The crux behind the DS is in the following two points:
   operation assuming applying changes take `O(1)`.
 - Example usage: [code](./CodeForces/1114F.cpp)
 
-### Persistent Segment Trees
+### [Persistent Segment Trees](./CodeSnippets/Trees/PersistentSegmentTree.cpp): Range Update Range Query
 
 Firstly, think of a normal segment tree implementation with nodes as pointer to some node structure.
 Now, in this tree, whenever we update some node, instead of updating the node, we create a new node with
