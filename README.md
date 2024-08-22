@@ -219,3 +219,30 @@ Whenever you see that there is a directed dependency between elements and new de
 
 - **Storing all group members in the DSU**: Due to the above thing, the asymptotic complexity of m queries on a dsu with n elements become
   `O(m + nlogn) asymptotically` <= `O(nlogn)` for the set maintanence, and original `O(1)` for each query.
+
+## Sqrt (Square root) Decomposition
+
+This is a technique that allows you to perform some common operations in `O(√N)`.
+
+### Sqrt Decomposition based data structure
+
+- We will divide the array into approximately length of `√N`
+- Calculate the answer for each of this block
+- For any [l, r] query, we first try to find the bucket bl and br for them
+  - if `bl == br` => `r - l <= √N`, hence linear calculation will be `O(√N)`
+  - else we'll linearly calculate the answers for both bl and br buckets in `O(√N)`
+    each and for each intermediate buckets, add the whole answer for the bucket.
+- Point updates are also simple, this can be done in `O(1)`
+- For range updates, just like lazy propagation, we maintain a second array which will
+  contain operations to be applied before delving linearly into the array.
+
+### MO's Algorithm
+
+This is a sqrt decomposition based algorithm where we divide the queries in a special way such that normal incremental computation
+results in:
+
+- For all queries in a particular block, for each query, the left pointer can move `√n`, and the right pointer in total would move `n`
+- Let the queries for a block be x, then TC = `O(x√n + n)`
+- Summing this for all the blocks, TC = `O(√nΣx + n√n)` == `O((m + n)√n)`
+
+[Implementation](./CodeSnippets/MO-Algorithm.cpp)
