@@ -14,7 +14,6 @@ using ordered_set =
 
 using vi = vector<int>;
 using vll = vector<long long>;
-using vb = vector<bool>;
 using pii = pair<int, int>;
 using pll = pair<long long, long long>;
 
@@ -184,6 +183,50 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
+    int n;
+    ip(n);
+    vi a(n);
+    ip(a);
+
+    _pq<pii> max_heap;
+    _pqr<pii> min_heap;
+    vector<bool> del(n + 1, false);
+
+    ump<int, int> l_index;
+    FOR(i, 0, n) l_index[a[i]] = i;
+    int expected_size = l_index.size();
+
+    vi res;
+    _pqr<pii> min_index;
+    FORE(p, l_index) {
+        min_index.push({p.second, p.first});
+    }
+
+    int r = 0, max_idx = -1;
+    FOR(i, 0, n) {
+        while(!min_index.empty() && del[min_index.top().second]) min_index.pop();
+
+        while(r <= min_index.top().first) {
+            max_heap.push({a[r], -r});
+            min_heap.push({a[r], r});
+            r++;
+        }
+
+        while (!max_heap.empty() && (-max_heap.top().second <= max_idx || del[max_heap.top().first])) max_heap.pop();
+        while (!min_heap.empty() && (min_heap.top().second <= max_idx || del[min_heap.top().first])) min_heap.pop();
+
+        int idx;
+        if (res.size() & 1) idx = min_heap.top().second;
+        else idx = -max_heap.top().second;
+
+        res.push_back(a[idx]);
+        max_idx = max(max_idx, idx);
+        del[a[idx]] = true;
+
+        if (res.size() == expected_size) break;
+    }
+    op(res.size());
+    op(res);
 
     return;
 }
@@ -197,6 +240,86 @@ int main() {
     while (t--) solve();
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
