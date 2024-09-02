@@ -385,4 +385,9 @@ Algo:
 - Model the dfs order in one direction (let's say `>`)
 - Model the back edges in opposite direction (`<`)
 
+### Single Source Shortest Path: [Dijkstra](./CodeSnippets/Graphs/Djkstra.cpp)
+
+Main theorem: After any vertex `v` becomes marked, the current distance to it `d[v]` is the shortest
+and will not longer change.
+
 ---
