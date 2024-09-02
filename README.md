@@ -370,4 +370,19 @@ Algorithm:
 - To create a condensation graph, we can denote each scc with a new index
   and join using the extra edges.
 
+### [Strong Orientation](./CodeSnippets/Graphs/StrongOrientationMinScc.cpp)
+
+> **Glossary**: ***Strong orientation*** of an undirected graph is an assignment that makes the graph
+strongly connected.
+
+Problem Statement: Find the strong orientation of a graph so that scc count is minimial.
+
+Thoughts: Bridges divide the graphs into SCCs.
+
+Algo:
+
+- Model the bridges in any direction, doesn't matters
+- Model the dfs order in one direction (let's say `>`)
+- Model the back edges in opposite direction (`<`)
+
 ---
