@@ -354,4 +354,20 @@ then when child graph 2 would have been traversed by child graph 1's traversal.
 - For an edge, if `tin[from] <= low[to]`, then `from` is an articulation point.
 - For a root, if childern traversal > 1, then `root` is an articulation point.
 
+### [Strongly Connected Components](./CodeSnippets/Graphs/StronglyConnectedComponents.cpp)
+
+> **Glossary**: ***Condensation Graph*** is a graph where all the strongly connected vertices
+> are compressed into a single vertex and all the edges part of strongly connected components
+> cease to exist.  
+> Property: Condensation graph would always be acyclic (*otherwise there's still a scc present*
+> *in there which we can condense*)
+
+Algorithm:
+
+- Find topological sort order
+- Create a transpose graph and perform dfs in the toposort order.
+  - The components traversed by each dfs is an scc
+- To create a condensation graph, we can denote each scc with a new index
+  and join using the extra edges.
+
 ---
