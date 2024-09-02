@@ -283,6 +283,7 @@ recursion stack.
 Given undirected graph, find all the bridges.
 
 **Algo**: Track two times for each vertex `v`:
+
 - `tin[v]` : Entry time of `v`
 - `low[v]` : Minimum time of a vertex from which this vertex `v` is reachable via a edge.
   *The edge should not come from it's parent*
@@ -290,5 +291,39 @@ Given undirected graph, find all the bridges.
 ![alt text](./Assets/image2.png)
 
 Example problem: [code](./CodeForces/1986F.cpp)
+
+### [Bridge Finder: Online](./CodeSnippets/Graphs/BridgeFinderOnline.cpp)
+
+> **Glossary**: ***k-edge connected component***: It's a connected component which will remain
+> connected if `< k` edges are removed from the connected component.
+
+In a graph, if we compress each connected component into a single, node and then bridges would be
+edges connected all of them.
+
+Think about what can happen when we add an edge `a->b`:
+
+- **Case 1**: If `a` and `b` lies in same 2-edge connected component, then nothing happens.
+- **Case 2:** If `a` and `b` lies in same connected component, then it form a cycle with one or
+  few of bridges.
+- **Case 3:** If `a` and `b` lies in entirely different connected components, then this edge forms
+  a bridge.
+
+To implement this algorithm:
+
+- We maintain the actual structure of the tree using a parent array.
+- All the 2-ecc are compressed into a single vertex `leader` and all the operations concerning
+  any of the member occurs through the leader.
+- We use two DSU to store 2-edge connected components and connected components
+- **Case 1:** Do nothing as the edges belong to the same 2-ecc.
+- **Case 3:** Since the edges lie in entirely different components, we just have to:
+  - Connect the two components: Here we would need to merge the smaller tree into bigger one.
+  - Let's say we are merging a to b with a being the smaller tree than b. Then we have to
+    first reroot tree_a at vertex a and then merge it with connected component leader of b.
+  - Then merge this newly rooted tree at a to b's leader.
+  - But maintain the structure as if a is joined to b.
+  - Mark the current edge as a bridge.
+- **Case 2:** We need to find the cycle in the compressed 2-ecc representation of the graph.
+  All the edges in this cycle are briges and they would cease to exist as this cycle would form
+  a new 2-ecc.
 
 ---
