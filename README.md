@@ -326,4 +326,32 @@ To implement this algorithm:
   All the edges in this cycle are briges and they would cease to exist as this cycle would form
   a new 2-ecc.
 
+### [Articulation Point: Offline](./CodeSnippets/Graphs/ArticulationPointOffline.cpp)
+
+The algorithm takes the exact same idea as the Bridge Finder offline algorithm.
+There we claimed that if `tin[form] < low[to]` then `from->to` is a bridge.
+Hence the node `from` must be an articulation point for sure.
+
+But when `tin[from] == low[to]` => back edge from `from` or its childern comes back
+to `from`, hence if we delete `from`, connected components will for sure increase.
+
+What if `from` is a root node? Then if in a dfs traversal, dfs get invoked more than
+one, that means graph has a structure something as follows:
+
+```text
+From
+|-----Child graph 1
+|-----Child graph 2
+:...
+:
+```
+
+Here child graph 1 would be independent of child graph 2 because if they were dependent,
+then when child graph 2 would have been traversed by child graph 1's traversal.
+
+**Hence**, the condition for articulation point is:
+
+- For an edge, if `tin[from] <= low[to]`, then `from` is an articulation point.
+- For a root, if childern traversal > 1, then `root` is an articulation point.
+
 ---
