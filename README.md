@@ -390,4 +390,22 @@ Algo:
 Main theorem: After any vertex `v` becomes marked, the current distance to it `d[v]` is the shortest
 and will not longer change.
 
+Time complexity analysis:
+
+```text
+For each vertex finally selected:
+  For all its neighbours:
+    Relax and erase -> insert the new node
+
+    ||
+    ||
+    \/  
+
+Independently, for each vertex, get it from set, iterate on neighbours: O(VlogV + E)
+Independently, for each edge, there might be a relaxation: O(ELogV)
+
+=> Total TC = (V + E)logV
+
+```
+
 ---
