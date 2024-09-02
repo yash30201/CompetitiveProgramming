@@ -1,4 +1,4 @@
-# Competitive Programming
+# Data Structures
 
 This repository contains all my notes and snippets related to competitive programming.
 
@@ -6,16 +6,6 @@ This repository contains all my notes and snippets related to competitive progra
 
 - Allows to calculate range queries which are cumulative on immutable arrays in logarithmic time instead of linear.
 - Commonly used in finding Lowest Common Ancestor quries in a binary tree.
-
-## [Binary Search](./CodeSnippets/BinarySearch.cpp)
-
-- In questions where we need to find number of pairs satisfying a particular
-  condition, we can fix the left boundary `l` and do lowerBound and upperBound searches
-  and add the pairs with `l` and points between `lowerBoundIndex` and `upperBoundIndex`.
-
-## [Bit Manipulation](./CodeSnippets/BitManipulation.cpp)
-
-- Finding AND of window which can decrease / increase is possible in O(1).
 
 ## Trees
 
@@ -138,35 +128,6 @@ These trees use bitwise operations to calculate indices and store things efficie
 
 This is relatively simpler to implement compared to segment trees for 2 dimensions.
 
-## Dynamic Programming
-
-Nothing for notes as such,just remember
-
-- When calculating some `ith` state, if you need to find the max of all smaller / greater element than i'th, then use
-  binary search or set or segment tree.
-- Some nice questions to know advance patterns:
-  - [CSES: Elevator](https://cses.fi/problemset/task/1653)
-
-## Array
-
-This section mostly contains algorithms related to arrays
-
-### Longest Increasing Subsequence
-
-Apart from DP, we have a smart `O(nlogn)` solution.
-
-```cpp
-vi lis;
-FORE(i, a) {
-    auto it = lower_bound(all(lis), i);
-    if (it == lis.end())
-        lis.pub(i);
-    else
-        *it = i;
-}
-op(lis.size());
-```
-
 ## [DSU](./CodeSnippets/Dsu.cpp): Disjoint Set Union
 
 This is a very powerful data structure which would allow managing groups of elements. A classic dsu would have two operations:
@@ -246,3 +207,88 @@ results in:
 - Summing this for all the blocks, TC = `O(√nΣx + n√n)` == `O((m + n)√n)`
 
 [Implementation](./CodeSnippets/MO-Algorithm.cpp)
+
+---
+
+# Algorithms
+
+## [Binary Search](./CodeSnippets/BinarySearch.cpp)
+
+- In questions where we need to find number of pairs satisfying a particular
+  condition, we can fix the left boundary `l` and do lowerBound and upperBound searches
+  and add the pairs with `l` and points between `lowerBoundIndex` and `upperBoundIndex`.
+
+## [Bit Manipulation](./CodeSnippets/BitManipulation.cpp)
+
+- Finding AND of window which can decrease / increase is possible in O(1).
+
+## Dynamic Programming
+
+Nothing for notes as such,just remember
+
+- When calculating some `ith` state, if you need to find the max of all smaller / greater element than i'th, then use
+  binary search or set or segment tree.
+- Some nice questions to know advance patterns:
+  - [CSES: Elevator](https://cses.fi/problemset/task/1653)
+
+## Array
+
+This section mostly contains algorithms related to arrays
+
+### Longest Increasing Subsequence
+
+Apart from DP, we have a smart `O(nlogn)` solution.
+
+```cpp
+vi lis;
+FORE(i, a) {
+    auto it = lower_bound(all(lis), i);
+    if (it == lis.end())
+        lis.pub(i);
+    else
+        *it = i;
+}
+op(lis.size());
+```
+
+## Pure BFS
+
+### [Shortest path of even length](./CodeSnippets/Graphs/ShortestPathOfEvenLength.cpp)
+
+Find the shortest path of even length from a source vertex `s` to target vertex `t`.
+
+Trick is to create an auxilary graph with vertices  `(v, 0)` and `(v, 1)` for each vertex `v`
+and then for each edge `x -> y` in original graph, add edges `(x, 0)->(y, 1)` and `(x, 1)->(y, 0)`
+in the auxilary graph. Then the answer is the shortest path from `(x, 0)` to `(y, 0)`.
+
+## Pure DFS
+
+### Entry & Exit time keeping
+
+It's a very important technique in dfs to store the entry and exit time of each vertex in a dfs.
+Many algorithms use this technique and it states some properties of vertex ordering.
+
+For eg, in a tree, we can check if a node `A` is an ancestor to a vertex node `B` iff
+`entry_time[A] < entry_time[B]` and `exit_time[A] > exit_time[B]`
+
+### [Iterative Dfs](./CodeSnippets/Graphs/DfsIterative.cpp)
+
+Iterative implementation of DFS (or any sort of recursion) us done by manually maintaining the
+recursion stack.
+
+## Graph Algorithms
+
+### [Bridge Finder: Offline](./CodeSnippets/Graphs/BridgeFinderOffline.cpp)
+
+Given undirected graph, find all the bridges.
+
+**Algo**: Track two times for each vertex `v`:
+- `tin[v]` : Entry time of `v`
+- `low[v]` : Minimum time of a vertex from which this vertex `v` is reachable via a edge.
+  *The edge should not come from it's parent*
+
+![alt text](./Assets/image2.png)
+
+Example problem: [code](./CodeForces/1986F.cpp)
+
+---

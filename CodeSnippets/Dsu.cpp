@@ -4,19 +4,19 @@ using namespace std;
 
 struct Dsu {
     int n;
-    vector<int> leader, depth;
+    vector<int> par, sz;
     Dsu(int n): n(n) {
-        leader.resize(n);
-        depth.assign(n,0);
-        iota(leader.begin(), leader.end(), 0);
+        par.resize(n);
+        sz.assign(n,1);
+        iota(par.begin(), par.end(), 0);
     }
-    inline int find(int x) { return x == leader[x] ? x : leader[x] = find(leader[x]); }
+    inline int find(int x) { return x == par[x] ? x : par[x] = find(par[x]); }
     void join(int x, int y) {
         x = find(x), y = find(y);
         if (x == y) return;
-        if (depth[x] < depth[y]) swap(x, y);
-        leader[y] = x;
-        if (depth[x] == depth[y]) depth[x]++;
+        if (sz[x] < sz[y]) swap(x, y);
+        par[y] = x;
+        sz[x] += sz[y];
         return;
     }
 };
