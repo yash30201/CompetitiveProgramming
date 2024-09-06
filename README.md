@@ -358,7 +358,7 @@ then when child graph 2 would have been traversed by child graph 1's traversal.
 
 > **Glossary**: ***Condensation Graph*** is a graph where all the strongly connected vertices
 > are compressed into a single vertex and all the edges part of strongly connected components
-> cease to exist.  
+> cease to exist.
 > Property: Condensation graph would always be acyclic (*otherwise there's still a scc present*
 > *in there which we can condense*)
 
@@ -388,7 +388,7 @@ Algo:
 ### Single Source Shortest Path: [Dijkstra](./CodeSnippets/Graphs/Djkstra.cpp)
 
 Main theorem: After any vertex `v` becomes marked, the current distance to it `d[v]` is the shortest
-and will not longer change.
+and will not longer change. This algorithm doesn't works if there's negative edge in the graph.
 
 Time complexity analysis:
 
@@ -399,7 +399,7 @@ For each vertex finally selected:
 
     ||
     ||
-    \/  
+    \/
 
 Independently, for each vertex, get it from set, iterate on neighbours: O(VlogV + E)
 Independently, for each edge, there might be a relaxation: O(ELogV)
@@ -407,5 +407,12 @@ Independently, for each edge, there might be a relaxation: O(ELogV)
 => Total TC = (V + E)logV
 
 ```
+
+### Single Source Shortest Path: [Bellman Ford](./CodeSnippets/Graphs/BellmanFord.cpp)
+
+This algorithm also takes into account negative edges but doesn't works with negative cycles.
+It's obvious that if there's a negative cycle in the graph, then it's non sensicle to find shortest path by weight
+as negative cycle would always make the shortest path to -infinity.
+
 
 ---
