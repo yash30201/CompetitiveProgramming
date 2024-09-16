@@ -1,3 +1,45 @@
+# Table of Contents
+
+<!-- TOC -->
+- [Table of Contents](#table-of-contents)
+- [Data Structures](#data-structures)
+  - [Sparse Table](#sparse-table)
+  - [Trees](#trees)
+    - [Segment Tree](#segment-tree)
+    - [Segment Tree: Lazy Propagation](#segment-tree-lazy-propagation)
+    - [Persistent Segment Trees: Range Update Range Query](#persistent-segment-trees-range-update-range-query)
+    - [Bit Trees](#bit-trees)
+      - [Iterative Segment Tree](#iterative-segment-tree)
+      - [Binary Indexed Tree](#binary-indexed-tree)
+      - [Binary Indexed Tree Range Update Point Query](#binary-indexed-tree-range-update-point-query)
+      - [Binary Indexed Tree: Range Update Range Query](#binary-indexed-tree-range-update-range-query)
+      - [Binary Indexed Tree: 2 Dimensions](#binary-indexed-tree-2-dimensions)
+  - [DSU: Disjoint Set Union](#dsu-disjoint-set-union)
+    - [Applications](#applications)
+  - [Sqrt (Square root) Decomposition](#sqrt-square-root-decomposition)
+    - [Sqrt Decomposition based data structure](#sqrt-decomposition-based-data-structure)
+    - [MO's Algorithm](#mos-algorithm)
+- [Algorithms](#algorithms)
+  - [Binary Search](#binary-search)
+  - [Bit Manipulation](#bit-manipulation)
+  - [Dynamic Programming](#dynamic-programming)
+  - [Array](#array)
+    - [Longest Increasing Subsequence](#longest-increasing-subsequence)
+  - [Pure BFS](#pure-bfs)
+    - [Shortest path of even length](#shortest-path-of-even-length)
+  - [Pure DFS](#pure-dfs)
+    - [Entry \& Exit time keeping](#entry--exit-time-keeping)
+    - [Iterative Dfs](#iterative-dfs)
+  - [Graph Algorithms](#graph-algorithms)
+    - [Bridge Finder: Offline](#bridge-finder-offline)
+    - [Bridge Finder: Online](#bridge-finder-online)
+    - [Articulation Point: Offline](#articulation-point-offline)
+    - [Strongly Connected Components](#strongly-connected-components)
+    - [Strong Orientation](#strong-orientation)
+    - [Single Source Shortest Path: Dijkstra](#single-source-shortest-path-dijkstra)
+<!-- /TOC -->
+
+
 # Data Structures
 
 This repository contains all my notes and snippets related to competitive programming.
