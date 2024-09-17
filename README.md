@@ -21,6 +21,7 @@
     - [MO's Algorithm](#mos-algorithm)
 - [Algorithms](#algorithms)
   - [Binary Search](#binary-search)
+    - [\[Ternary Search\]](#ternary-search)
   - [Bit Manipulation](#bit-manipulation)
   - [Dynamic Programming](#dynamic-programming)
   - [Array](#array)
@@ -259,6 +260,46 @@ results in:
 - In questions where we need to find number of pairs satisfying a particular
   condition, we can fix the left boundary `l` and do lowerBound and upperBound searches
   and add the pairs with `l` and points between `lowerBoundIndex` and `upperBoundIndex`.
+
+### [Ternary Search]
+
+Incases where the evaluation function (`f(x)`) is first strictly non decreasing (or non increasing) for some x and then becomes stritly non increasing (or non decreasing) for rest of the x(s), we can employ ternary search.
+
+> All intervals are half open
+
+Let's say initial boundaries of x is `[l, r)`. Then for:
+
+```text
+d = (r - l) / 3;
+m1 = l + d;
+m2 = r - d;
+```
+
+Let `fm1 = f(m1 - 1)`, `fm2 = f(m2)`, then:
+
+1) If `fm1 < fm2` => We won't see the peak on the left of m1, thus we can do `l = m1`.
+2) If `fm1 > fm2` => We won't see the peak on the right of m2, thus we can do `r = m2`.
+3) If `fm1 == fm2` => We won't see the peak on either of the boundaries, thus
+we can do `l = m1 and r = m2`.
+
+We can only run this search when we have **more than 4 elements**, as this requires four distinct
+points `l, m1, m2, r`.
+
+In code, this translates to:
+
+```cpp
+while (r - l > 4) {
+    int d = (r - l) / 3;
+    int m1 = l + d, m2 = r - d;
+    auto fm1 = f(m1 - 1), fm2 = f(m2);
+    if (fm1 >= fm2) l = m1;
+    if (fm2 >= fm1) r = m2;
+}
+```
+
+In the end, answer could be either of `l, l+1, l+2, l+3` (as r - l == 4).
+
+Example question: [code](./CodeForces/439D.cpp)
 
 ## [Bit Manipulation](./CodeSnippets/BitManipulation.cpp)
 
