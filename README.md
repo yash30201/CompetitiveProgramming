@@ -38,6 +38,7 @@
     - [Strongly Connected Components](#strongly-connected-components)
     - [Strong Orientation](#strong-orientation)
     - [Single Source Shortest Path: Dijkstra](#single-source-shortest-path-dijkstra)
+    - [Single Source Shortest Path: Bellman Ford](#single-source-shortest-path-bellman-ford)
 <!-- /TOC -->
 
 
@@ -313,6 +314,16 @@ Nothing for notes as such,just remember
   binary search or set or segment tree.
 - Some nice questions to know advance patterns:
   - [CSES: Elevator](https://cses.fi/problemset/task/1653)
+- In DP questions, when thinking about calculation of a particular state, **always check to if all the possible previous
+states form a contiguous segment or not**. If yes then much high probability you can calculate the current state
+in O(log(SegmentSize)) or O(1) as compared to O(SegmentSize).
+- If you can divide a problem into subproblems by choosing a divider element and solving the problems to the left
+and to the right independently, then this will take O(DIVIDER_ELEMENTS * N^2)
+    - Instead, there can be possibility that for a particularly solved prefix, when adding a new element
+    to the prefix, we can solve solve the suffix as a subproblem and update the answer (Example problem: Dima and Hares)
+        - Now we just have the complexity of O(N * N): N-> for each prefix, N -> solve the corresponsing suffix.
+- In DP on trees, highly probable that we don't need to maintain a state array for that as recursion stack's return
+type it's self behaves like the state variables for the children.
 
 ## Array
 
@@ -441,7 +452,7 @@ then when child graph 2 would have been traversed by child graph 1's traversal.
 
 > **Glossary**: ***Condensation Graph*** is a graph where all the strongly connected vertices
 > are compressed into a single vertex and all the edges part of strongly connected components
-> cease to exist.  
+> cease to exist.
 > Property: Condensation graph would always be acyclic (*otherwise there's still a scc present*
 > *in there which we can condense*)
 
@@ -471,7 +482,7 @@ Algo:
 ### Single Source Shortest Path: [Dijkstra](./CodeSnippets/Graphs/Djkstra.cpp)
 
 Main theorem: After any vertex `v` becomes marked, the current distance to it `d[v]` is the shortest
-and will not longer change.
+and will not longer change. This algorithm doesn't works if there's negative edge in the graph.
 
 Time complexity analysis:
 
@@ -482,7 +493,7 @@ For each vertex finally selected:
 
     ||
     ||
-    \/  
+    \/
 
 Independently, for each vertex, get it from set, iterate on neighbours: O(VlogV + E)
 Independently, for each edge, there might be a relaxation: O(ELogV)
@@ -490,5 +501,12 @@ Independently, for each edge, there might be a relaxation: O(ELogV)
 => Total TC = (V + E)logV
 
 ```
+
+### Single Source Shortest Path: [Bellman Ford](./CodeSnippets/Graphs/BellmanFord.cpp)
+
+This algorithm also takes into account negative edges but doesn't works with negative cycles.
+It's obvious that if there's a negative cycle in the graph, then it's non sensicle to find shortest path by weight
+as negative cycle would always make the shortest path to -infinity.
+
 
 ---
