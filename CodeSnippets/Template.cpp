@@ -7,7 +7,8 @@
 using namespace std;
 using namespace __gnu_pbds;
 
-
+// find_by_order -> value at index (0 based)
+// order_of_key -> index of value (0 based)
 template <typename T>
 using ordered_set =
     tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
