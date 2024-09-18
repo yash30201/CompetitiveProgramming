@@ -7,8 +7,7 @@
 using namespace std;
 using namespace __gnu_pbds;
 
-// find_by_order -> value at index (0 based)
-// order_of_key -> index of value (0 based)
+
 template <typename T>
 using ordered_set =
     tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
@@ -185,7 +184,55 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
+    int N, A, B, K;
+    ip(N, A, B, K);
+    vi dp(N + 1), prev(N + 1);
+    {
+        FOR(a, 1, N + 1) {
+            // see(i, a, B);
+            if (a == B || a == A) continue;
+            int l, r;
+            if (a > B) {
+                l = (a + B) / 2 + 1;
+                r = N;
+            } else {
+                r = (B + a - 1) / 2;
+                l = 1;
+            }
+            if (A >= l && A <= r) dp[a] = 1;
+        }
+        FOR(a, 1, N + 1) dp[a] += dp[a - 1];
+    }
+    FOR(i, 1, K) {
+        FOR(j, 0, N + 1) {
+            prev[j] = dp[j];
+            dp[j] = 0;
+        }
 
+        // see(dp);
+        FOR(a, 1, N + 1) {
+            // see(i, a, B);
+            if (a == B) continue;
+            int l, r;
+            if (a > B) {
+                l = (a + B) / 2 + 1;
+                r = N;
+            } else {
+                r = (B + a - 1) / 2;
+                l = 1;
+            }
+            int z = prev[r] - prev[l - 1];
+            dp[a] = z;
+            if (dp[a] < 0) dp[a] += mod;
+            int x = prev[a] - prev[a - 1];
+            if (x < 0) x += mod;
+            dp[a] -= x;
+            if (dp[a] < 0) dp[a] += mod;
+        }
+        // see(dp);
+        FOR(a, 1, N + 1) dp[a] = (dp[a] + dp[a - 1]) % mod;
+    }
+    op(dp[N]);
     return;
 }
 
@@ -194,7 +241,7 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
     return 0;
 }

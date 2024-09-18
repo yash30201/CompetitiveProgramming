@@ -7,8 +7,7 @@
 using namespace std;
 using namespace __gnu_pbds;
 
-// find_by_order -> value at index (0 based)
-// order_of_key -> index of value (0 based)
+
 template <typename T>
 using ordered_set =
     tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
@@ -183,9 +182,55 @@ int px[] = {-1, 0, 1, 0};
 int py[] = {0, -1, 0, 1};
 string path_trace_dir = "DRUL";
 
+constexpr int N = 200005;
+int dp[N];
+vector<pii> g[N];
+
+void dfs(int node) {
+    dp[node] = 0;
+    for (auto [next, sign]: g[node]) {
+        if (dp[next] != -1) continue;
+        dfs(next);
+        dp[node] += dp[next] + (sign == -1 ? 1 : 0);
+    }
+}
+
+bool vis[N];
+void DfsWithDp(int node, int par = -1, int sgn = 0) {
+    vis[node] = true;
+    if (par != -1) {
+        dp[node] = dp[par] + sgn;
+    }
+    for (auto [next, sign]: g[node]) {
+        if (vis[next]) continue;
+        DfsWithDp(next, node, sign);
+    }
+}
+
 void solve() {
     // Let's begin
-
+    int n;
+    ip(n);
+    memset(dp,-1,sizeof(dp));
+    FOR(i, 1, N) {
+        int x, y;
+        ip(x, y);
+        g[x - 1].push_back({y - 1, 1});
+        g[y - 1].push_back({x - 1, -1});
+    }
+    dfs(0);
+    DfsWithDp(0);
+    int min_roads = INF;
+    vector<int> capitals;
+    FOR(i, 0, n) {
+        if (dp[i] < min_roads) {
+            min_roads = dp[i];
+            capitals.clear();
+            capitals.pub(i + 1);
+        } else if (dp[i] == min_roads) capitals.pub(i + 1);
+    }
+    op(min_roads);
+    op(capitals);
     return;
 }
 
@@ -194,7 +239,7 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
     return 0;
 }

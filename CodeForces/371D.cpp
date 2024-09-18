@@ -7,8 +7,7 @@
 using namespace std;
 using namespace __gnu_pbds;
 
-// find_by_order -> value at index (0 based)
-// order_of_key -> index of value (0 based)
+
 template <typename T>
 using ordered_set =
     tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
@@ -183,9 +182,62 @@ int px[] = {-1, 0, 1, 0};
 int py[] = {0, -1, 0, 1};
 string path_trace_dir = "DRUL";
 
+class DSU {
+    int n;
+    vi par;
+public:
+    DSU(int n): n(n) {
+        par.resize(n);
+        iota(all(par), 0);
+    }
+    inline int getPar(int x) {return par[x] == x ? x : par[x] = getPar(par[x]);}
+    void join(int x, int y) {
+        x = getPar(x), y = getPar(y);
+        if (x != y) par[x] = y;
+    }
+};
+
 void solve() {
     // Let's begin
-
+    int n;
+    ip(n);
+    vi a(n);
+    ip(a);
+    int q;
+    ip(q);
+    DSU dsu(n);
+    vi water(n);
+    while(q--) {
+        int t;
+        ip(t);
+        if (t == 1) {
+            int p, x;
+            ip(p, x);
+            p--;
+            p = dsu.getPar(p);
+            while (x) {
+                if (p == n - 1) {
+                    water[p] += x;
+                    water[p] = min(water[p], a[p]);
+                    break;
+                }
+                if (x < a[p] - water[p]) {
+                    water[p] += x;
+                    x = 0;
+                } else {
+                    int nxt = dsu.getPar(p + 1);
+                    x -= a[p] - water[p];
+                    water[p] = a[p];
+                    dsu.join(p, nxt);
+                    p = nxt;
+                }
+            }
+        } else {
+            int k;
+            ip(k);
+            op(water[k - 1]);
+        }
+    }
     return;
 }
 
@@ -194,7 +246,7 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
     return 0;
 }
