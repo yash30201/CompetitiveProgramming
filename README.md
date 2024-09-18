@@ -39,6 +39,7 @@
     - [Strong Orientation](#strong-orientation)
     - [Single Source Shortest Path: Dijkstra](#single-source-shortest-path-dijkstra)
     - [Single Source Shortest Path: Bellman Ford](#single-source-shortest-path-bellman-ford)
+    - [All Source Shortest Path: Floyd Warshall](#all-source-shortest-path-floyd-warshall)
 <!-- /TOC -->
 
 
@@ -192,7 +193,7 @@ then the average time complexity of all the operations combined take `O(1)`, act
 
 > O(Ackerman(n)) is nearly 4 for 10^600. This seems intuitive from the fact that O(log(logN)) is < 3 for 10^600
 
-Whenever you see that there is a directed dependency between elements and new dependencies are getting added and dependencies are only 1 outgoing and you want to instantly get the end of path, then think about dsu with just path compression! [code](./SPOJ/CLFLARR.cpp)
+Whenever you see that there is a directed dependency between elements and new dependencies are getting added and dependencies are only 1 outgoing and you want to instantly get the end of path, then think about dsu with just path compression! [code](./SPOJ/CLFLARR.cpp), Codeforces: [Vessels](https://codeforces.com/problemset/problem/371/D).
 
 ### Applications
 
@@ -508,5 +509,8 @@ This algorithm also takes into account negative edges but doesn't works with neg
 It's obvious that if there's a negative cycle in the graph, then it's non sensicle to find shortest path by weight
 as negative cycle would always make the shortest path to -infinity.
 
+### All Source Shortest Path: [Floyd Warshall]()
+
+In this algorithm, let's say we try to relax i to j using k, then k would be the outer loop.
 
 ---
