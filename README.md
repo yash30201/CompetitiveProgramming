@@ -38,6 +38,7 @@
     - [Strongly Connected Components](#strongly-connected-components)
     - [Strong Orientation](#strong-orientation)
     - [Single Source Shortest Path: Dijkstra](#single-source-shortest-path-dijkstra)
+    - [Single Source Shortest Path: Bellman Ford](#single-source-shortest-path-bellman-ford)
 <!-- /TOC -->
 
 
@@ -313,6 +314,16 @@ Nothing for notes as such,just remember
   binary search or set or segment tree.
 - Some nice questions to know advance patterns:
   - [CSES: Elevator](https://cses.fi/problemset/task/1653)
+- In DP questions, when thinking about calculation of a particular state, **always check to if all the possible previous
+states form a contiguous segment or not**. If yes then much high probability you can calculate the current state
+in O(log(SegmentSize)) or O(1) as compared to O(SegmentSize).
+- If you can divide a problem into subproblems by choosing a divider element and solving the problems to the left
+and to the right independently, then this will take O(DIVIDER_ELEMENTS * N^2)
+    - Instead, there can be possibility that for a particularly solved prefix, when adding a new element
+    to the prefix, we can solve solve the suffix as a subproblem and update the answer (Example problem: Dima and Hares)
+        - Now we just have the complexity of O(N * N): N-> for each prefix, N -> solve the corresponsing suffix.
+- In DP on trees, highly probable that we don't need to maintain a state array for that as recursion stack's return
+type it's self behaves like the state variables for the children.
 
 ## Array
 
