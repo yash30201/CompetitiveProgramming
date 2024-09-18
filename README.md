@@ -192,7 +192,7 @@ then the average time complexity of all the operations combined take `O(1)`, act
 
 > O(Ackerman(n)) is nearly 4 for 10^600. This seems intuitive from the fact that O(log(logN)) is < 3 for 10^600
 
-Whenever you see that there is a directed dependency between elements and new dependencies are getting added and dependencies are only 1 outgoing and you want to instantly get the end of path, then think about dsu with just path compression! [code](./SPOJ/CLFLARR.cpp)
+Whenever you see that there is a directed dependency between elements and new dependencies are getting added and dependencies are only 1 outgoing and you want to instantly get the end of path, then think about dsu with just path compression! [code](./SPOJ/CLFLARR.cpp), Codeforces: [Vessels](https://codeforces.com/problemset/problem/371/D).
 
 ### Applications
 
