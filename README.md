@@ -40,6 +40,8 @@
     - [Single Source Shortest Path: Dijkstra](#single-source-shortest-path-dijkstra)
     - [Single Source Shortest Path: Bellman Ford](#single-source-shortest-path-bellman-ford)
     - [All Source Shortest Path: Floyd Warshall](#all-source-shortest-path-floyd-warshall)
+- [Mathematics](#mathematics)
+  - [Probability](#probability)
 <!-- /TOC -->
 
 
@@ -325,7 +327,24 @@ and to the right independently, then this will take O(DIVIDER_ELEMENTS * N^2)
         - Now we just have the complexity of O(N * N): N-> for each prefix, N -> solve the corresponsing suffix.
 - In DP on trees, highly probable that we don't need to maintain a state array for that as recursion stack's return
 type it's self behaves like the state variables for the children.
+- There's a technique to loop top down in a way such that all the next transition states are calculated first before going there.
+Example question: [Bad Luck Island](./CodeForces/540D.cpp)
 
+```cpp
+// Let's say we have A, B, C limits and we know dp(A, B, C);
+
+// To iterate top down, we do
+
+int total = A + B + C;
+FORD(t, 0, T + 1) {
+  FORD(a, 0, A + 1) {
+    FORD(b, 0, B + 1) {
+      int c = t - a - b;
+      if (c < 0 || c > C) continue;
+    }
+  }
+}
+```
 ## Array
 
 This section mostly contains algorithms related to arrays
@@ -514,3 +533,9 @@ as negative cycle would always make the shortest path to -infinity.
 In this algorithm, let's say we try to relax i to j using k, then k would be the outer loop.
 
 ---
+
+# Mathematics
+
+## Probability
+
+Most of the probability questions are calculated via dp.
