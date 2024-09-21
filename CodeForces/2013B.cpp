@@ -185,7 +185,13 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-
+    int n;
+    ip(n);
+    vll a(n);
+    ip(a);
+    ll res = accumulate(all(a), 0LL) - a.back() - a[n-2];
+    res = a.back() - a[n - 2] + res;
+    op(res);
     return;
 }
 

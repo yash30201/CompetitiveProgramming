@@ -185,7 +185,15 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-
+    ll n, x, y;
+    ip(n, x, y);
+    if (x <= y) {
+        ll res = (n + x - 1) / x;
+        op(res);
+        return;
+    }
+    ll res = (n + y - 1) / y;
+    op(res);
     return;
 }
 

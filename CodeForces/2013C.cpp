@@ -79,7 +79,6 @@ int n_ones(ll x) { return __builtin_popcountll(x); }
 #define se second
 #define lb lower_bound
 #define up upper_bound
-#define endl '\n'
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 template <typename P, typename Q>
@@ -183,9 +182,73 @@ int px[] = {-1, 0, 1, 0};
 int py[] = {0, -1, 0, 1};
 string path_trace_dir = "DRUL";
 
+int ask(string &s) {
+    cout << "? " << s << endl;
+    int x;
+    cin >> x;
+    return x;
+}
+
 void solve() {
     // Let's begin
+    int n;
+    ip(n);
+    string s(n, '0');
+    int len = 0;
+    string t = "0";
+    int x = ask(t);
+    if (x == 0) {
+        fill(all(s), '1');
+        cout << "! " << s << endl;
+        return;
+    }
+    len++;
 
+    while (len < n) {
+        t.pub('0');
+        len++;
+        x = ask(t);
+        if (x == 0) {
+            t.pop_back();
+            t.pub('1');
+            int y = ask(t);
+            if (y == 0) {
+                len--;
+                // string end encountered;
+                t.pop_back();
+                string u = t;
+                while (true) {
+                    u = "0" + u;
+                    int z = ask(u);
+                    if (z == 0) {
+                        if (u.size() == n) {
+                            u[0] = '1';
+                            cout << "! " << u << endl;
+                            return;
+                        }
+                        u[0] = '1';
+                        if (ask(u) == 0) {
+                            cout << "! ";
+                            for (int i = 1 ; i < sz(u) ; i++) cout << u[i];
+                            cout << endl;
+                            return;
+                        } else {
+                            if (u.size() == n) {
+                                cout << "! " << u << endl;
+                                return;
+                            }
+                        }
+                    } else {
+                        if (u.size() == n) {
+                            cout << "! " << u << endl;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    cout << "! " << t << endl;
     return;
 }
 

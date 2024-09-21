@@ -18,8 +18,9 @@ using vll = vector<long long>;
 using vb = vector<bool>;
 using pii = pair<int, int>;
 using pll = pair<long long, long long>;
-using vpii = vector<pair<int, int>>;
-using vpll = vector<pair<long long, long long>>;
+
+template <typename T>
+using _v = vector<T>;
 
 template <typename T>
 using _pq = priority_queue<T>;
@@ -72,7 +73,6 @@ int n_ones(ll x) { return __builtin_popcountll(x); }
 #define FORD(i, a, b) for (int i = b - 1; i >= a; i--)
 #define FORE(x, a) for (auto& x : a)
 #define all(a) a.begin(), a.end()
-#define mms(a, x) memset(a, x, sizeof(a));
 #define sz(a) a.size()
 #define pub push_back
 #define fi first
@@ -185,7 +185,21 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
+    ll n, W;
+    ip(n, W);
+    vi par(n);
+    FOR(i, 1, n) ip(par[i]);
+    long long curr_w = W * n;
 
+    FOR(_i, 1, n) {
+        ll node, w;
+        ip(node, w);
+        ll p = par[node];
+        int blank = 0;
+        ll prev = (node == 1 ? n : node - 1);
+        ll next = (node == n ? 1 : node + 1);
+
+    }
     return;
 }
 
