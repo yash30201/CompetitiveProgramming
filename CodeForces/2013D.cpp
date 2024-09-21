@@ -183,9 +183,21 @@ int px[] = {-1, 0, 1, 0};
 int py[] = {0, -1, 0, 1};
 string path_trace_dir = "DRUL";
 
+
+
 void solve() {
     // Let's begin
-
+    int n;
+    ip(n);
+    vll a(n);
+    ip(a);
+    vll p = a, s = a;
+    FOR(i, 1, n) p[i] += p[i - 1];
+    FORD(i, 0, n - 1) s[i] += s[i + 1];
+    ll minx = INFL, maxx = -INFL;
+    FOR(i, 0, n) minx = min(minx, p[i] / (i + 1));
+    FORD(i, 0, n) maxx = max(maxx, (s[i] + n - i - 1) / (n - i));
+    op(maxx - minx);
     return;
 }
 

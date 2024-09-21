@@ -185,7 +185,38 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-
+    int n;
+    ip(n);
+    vi a(n);
+    ip(a);
+    int G = a[0];
+    FOR(i, 1, n) G = gcd(G, a[i]);
+    FOR(i, 0, n) a[i] /= G;
+    sort(all(a));
+    ll res = a[0];
+    int curr_g = a[0];
+    vb vis(n, false);
+    vis[0] = true;
+    FOR(s, 1, n) {
+        int best = INF, cg = 0, best_i;
+        FOR(i, 0, n) {
+            if (vis[i]) continue;
+            cg = gcd(curr_g, a[i]);
+            if (best > cg) {
+                best = cg;
+                best_i = i;
+            }
+        }
+        curr_g = best;
+        vis[best_i] = true;
+        res += curr_g;
+        if (curr_g == 1) {
+            res += (n - s - 1);
+            break;
+        }
+    }
+    res *= G;
+    op(res);
     return;
 }
 
