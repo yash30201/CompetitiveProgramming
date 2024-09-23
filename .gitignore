@@ -16,3 +16,4 @@
 *.yml
 *.cph/
 *.dSYM/
+*.DS_Store
