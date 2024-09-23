@@ -183,54 +183,70 @@ int px[] = {-1, 0, 1, 0};
 int py[] = {0, -1, 0, 1};
 string path_trace_dir = "DRUL";
 
+vi cnt(4);
+const int N = 100005;
+bool vis[N];
+int val[N];
+void dfs(vi g[], int node) {
+    vis[node] = true;
+    bool leaf = true;
+    for(int to: g[node]) {
+        if (vis[to]) continue;
+        dfs(g, to);
+        leaf = false;
+    }
+    if (!leaf && node != 0 && val[node] == 2) cnt[3]++;
+    if (leaf) {
+        cnt[val[node]]++;
+    }
+}
 void solve() {
     // Let's begin
     int n;
-    ll W;
-    ip(n, W);
-    vi par(n + 1), d(n + 1);
-    FOR(i, 2, n + 1) {
-        ip(par[i]);
-        d[i] = d[par[i]] + 1;
+    fill(all(cnt), 0);
+    memset(vis, false, sizeof(vis));
+    ip(n);
+    vi g[n];
+    FOR(i, 1, n) {
+        int x, y;
+        ip(x, y);
+        x--;
+        y--;
+        g[x].pub(y);
+        g[y].pub(x);
     }
-    auto GetLca = [&](int x, int y) -> int {
-        while (x != y) {
-            if (d[x] < d[y]) swap(x, y);
-            x = par[x];
+    string s;
+    ip(s);
+    FOR(i, 0, n) {
+        if (s[i] == '0') val[i] = 0;
+        else if (s[i] == '1') val[i] = 1;
+        else val[i] = 2;
+    }
+    dfs(g, 0);
+    int res = 0;
+    auto Check = [&](bool alice) {
+        int root = val[0];
+        vi c = cnt;
+        if (root == 2) {
+            if (c[0] > c[1]) root = alice;
+            else root = !alice;
+            alice = !alice;
         }
-        return x;
+        int m1 = c[2] / 2;
+        int m2 = c[2] - m1;
+        if (alice) {
+            c[root] += m1;
+            c[1 - root] += m2;
+        } else {
+            c[root] += m2;
+            c[1 - root] += m1;
+        }
+        return c[1 - root];
     };
-    vi cnt(n + 1, 0), node_table[n + 1];
-    FOR(i, 1, n + 1) {
-        int i1 = (i == n ? 1 : i + 1);
-        int lca = GetLca(i, i1);
-        // see(i, i1, lca);
-        for (int node = i ; node != lca ; node = par[node]) {
-            cnt[i]++;
-            node_table[node].pub(i);
-        }
-        for (int node = i1 ; node != lca ; node = par[node]) {
-            cnt[i]++;
-            node_table[node].pub(i);
-        }
-    }
-    // see(cnt);
-
-    int rem = n;
-    ll curr_sum = 0LL;
-    FOR(q, 1, n) {
-        int x;
-        ll w;
-        ip(x, w);
-        for(int i: node_table[x]) {
-            if (--cnt[i] == 0) rem--;
-        }
-        curr_sum += w;
-        // see(x, w, curr_sum, rem, W);
-        ll res = 2 * curr_sum + rem * (W - curr_sum);
-        cout << res << (q == n - 1 ? "" : " ");
-    }
-    cout << endl;
+    
+    res = Check(true);
+    if (cnt[3] & 1) res = max(res, Check(false));
+    op(res);
     return;
 }
 

@@ -18,9 +18,8 @@ using vll = vector<long long>;
 using vb = vector<bool>;
 using pii = pair<int, int>;
 using pll = pair<long long, long long>;
-
-template <typename T>
-using _v = vector<T>;
+using vpii = vector<pair<int, int>>;
+using vpll = vector<pair<long long, long long>>;
 
 template <typename T>
 using _pq = priority_queue<T>;
@@ -73,6 +72,7 @@ int n_ones(ll x) { return __builtin_popcountll(x); }
 #define FORD(i, a, b) for (int i = b - 1; i >= a; i--)
 #define FORE(x, a) for (auto& x : a)
 #define all(a) a.begin(), a.end()
+#define mms(a, x) memset(a, x, sizeof(a));
 #define sz(a) a.size()
 #define pub push_back
 #define fi first
@@ -185,52 +185,21 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-    int n;
-    ll W;
-    ip(n, W);
-    vi par(n + 1), d(n + 1);
-    FOR(i, 2, n + 1) {
-        ip(par[i]);
-        d[i] = d[par[i]] + 1;
-    }
-    auto GetLca = [&](int x, int y) -> int {
-        while (x != y) {
-            if (d[x] < d[y]) swap(x, y);
-            x = par[x];
-        }
-        return x;
-    };
-    vi cnt(n + 1, 0), node_table[n + 1];
-    FOR(i, 1, n + 1) {
-        int i1 = (i == n ? 1 : i + 1);
-        int lca = GetLca(i, i1);
-        // see(i, i1, lca);
-        for (int node = i ; node != lca ; node = par[node]) {
-            cnt[i]++;
-            node_table[node].pub(i);
-        }
-        for (int node = i1 ; node != lca ; node = par[node]) {
-            cnt[i]++;
-            node_table[node].pub(i);
+    int n, k;
+    ip(n, k);
+    vi a(n);
+    ip(a);
+    int curr = 0, res = 0;
+    FOR(i, 0, n) {
+        if (a[i] >= k) curr += a[i];
+        else if (a[i] == 0){
+            if (curr) {
+                curr--;
+                res++;
+            }
         }
     }
-    // see(cnt);
-
-    int rem = n;
-    ll curr_sum = 0LL;
-    FOR(q, 1, n) {
-        int x;
-        ll w;
-        ip(x, w);
-        for(int i: node_table[x]) {
-            if (--cnt[i] == 0) rem--;
-        }
-        curr_sum += w;
-        // see(x, w, curr_sum, rem, W);
-        ll res = 2 * curr_sum + rem * (W - curr_sum);
-        cout << res << (q == n - 1 ? "" : " ");
-    }
-    cout << endl;
+    op(res);
     return;
 }
 
