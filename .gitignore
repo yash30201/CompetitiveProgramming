@@ -17,3 +17,5 @@
 *.cph/
 *.dSYM/
 *.DS_Store
+MetaHackerCup/*/*.txt
+MetaHackerCup/*.txt
