@@ -65,6 +65,7 @@ using ll = long long;
 const int INF = int(1e9);
 const ll INFL = ll(1e18);
 const int mod = 1000000007;
+using ull = unsigned long long;
 
 int n_ones(int x) { return __builtin_popcount(x); }
 int n_ones(ll x) { return __builtin_popcountll(x); }
@@ -80,7 +81,7 @@ int n_ones(ll x) { return __builtin_popcountll(x); }
 #define lb lower_bound
 #define up upper_bound
 #define endl '\n'
-mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 template <typename P, typename Q>
 ostream& operator<<(ostream& out, const pair<P, Q>& a) {

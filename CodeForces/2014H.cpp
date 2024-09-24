@@ -80,7 +80,7 @@ int n_ones(ll x) { return __builtin_popcountll(x); }
 #define lb lower_bound
 #define up upper_bound
 #define endl '\n'
-mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 template <typename P, typename Q>
 ostream& operator<<(ostream& out, const pair<P, Q>& a) {
@@ -183,58 +183,32 @@ int px[] = {-1, 0, 1, 0};
 int py[] = {0, -1, 0, 1};
 string path_trace_dir = "DRUL";
 
-struct Node {
-    int odd, int even;
-    Node(): odd(0), even(0) {}
-};
-class SegTree {
-    int n;
-    vector<Node> t;
-    ump<int, > sa;
-    Node join(const Node &x, const Node &y, int l, int m) {
-        Node res;
-        if ((m - l) & 1) {
-            res.odd = x.odd + y.even;
-            res.even = x.even + y.odd;
-        } else {
-            res.odd = x.odd + y.odd;
-            res.even = x.even + y.even;
-        }
-        return res;
-    }
-    Node merge(const Node)
-    void build(vi &a, int i, int l, int r) {
-        if (r - l == 1) {
-            sa[i] = {a[l]};
-            t[i].odd = a[l];
-            t[i].even = 0;
-            return;
-        }
-        int m = (l + r) >> 1;
-        build(a, i << 1, l, m);
-        build(a, i << 1 | 1, l, m);
-        t[i] = move(join(t[i << 1], t[i << 1 | 1]));
-    }
-
-    Node get(int i, int l, int r, int L, int R) {
-        if (l >= R || r <= L) return Node();
-        if (l >= L && r <= R) return t[i];
-        int m = (l + r) >> 1;
-    }
-public:
-    SegTree(vi &a) {
-        n = a.size();
-        t.resize(n << 2);
-        build(a, 1, 0, n);
-    }
-    bool get(int l, int r) { // [l, r)
-
-    }
-};
-
 void solve() {
     // Let's begin
-
+    int n,q ;
+    ip(n, q);
+    vi a(n);
+    ip(a);
+    ump<int, unsigned long long> mp;
+    us<unsigned long long> st;
+    FOR(i, 0, n) {
+        if (mp.count(a[i])) continue;
+        unsigned long long rnum;
+        do {
+            rnum = rng();
+        } while (st.count(rnum));
+        st.insert(rnum);
+        mp[a[i]] = rnum;
+    }
+    vector<unsigned long long> pxor(n + 1);
+    FOR(i, 0, n) pxor[i + 1] = pxor[i] ^ mp[a[i]];
+    while (q--) {
+        int l, r;
+        ip(l, r);
+        l--;
+        if (pxor[l] == pxor[r]) op("YES");
+        else op("NO");
+    }
     return;
 }
 
