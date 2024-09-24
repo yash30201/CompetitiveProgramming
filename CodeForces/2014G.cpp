@@ -193,22 +193,33 @@ void solve() {
     _pq<pii> milks;
     ll res = 0, curr_day = 0;
     auto compute = [&](ll next_day) {
+        int carry_over = 0, prev_day;
         while (!milks.empty() && curr_day < next_day) {
             auto [date, val] = milks.top();
+            prev_day = date;
             milks.pop();
             if (date + life - 1 < curr_day) continue;
             ll max_consume_days = min((date + life - 1) - curr_day + 1, next_day - curr_day);
-            if (max_consume_days * per_day <= val) {
+            if (max_consume_days * per_day <= val + carry_over) {
                 curr_day += max_consume_days;
                 res += max_consume_days;
-                val -= max_consume_days * per_day;
+                val -= (max_consume_days * per_day - carry_over);
+                carry_over = 0;
+                if (val) milks.push({date, val});
             } else {
-                int x = val / per_day;
+                int x = (val + carry_over) / per_day;
                 res += x;
                 curr_day += x;
-                val = 0;
+                int z = x * per_day;
+                if (carry_over >= z) {
+                    carry_over -= z;
+                    carry_over += val;
+                }
+                else {
+                    carry_over = (val - (z - carry_over));
+                    val = 0;
+                }
             }
-            if (val) milks.push({date, val});
         }
         curr_day  = next_day;
     };
