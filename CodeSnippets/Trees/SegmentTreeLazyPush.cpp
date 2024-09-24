@@ -48,7 +48,7 @@ struct SegmentTree {
         if (l >= R || r <= L) return;
         if (l >= L && r <= R) {
             t[i] += (r - l) * val;
-            lazy[i] = val;
+            lazy[i] += val;
             return;
         }
         int m = (l + r)>>1;
