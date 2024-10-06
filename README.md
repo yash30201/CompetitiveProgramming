@@ -42,6 +42,7 @@
     - [All Source Shortest Path: Floyd Warshall](#all-source-shortest-path-floyd-warshall)
 - [Mathematics](#mathematics)
   - [Probability](#probability)
+- [General Ideas](#general-ideas)
 <!-- /TOC -->
 
 
@@ -329,6 +330,10 @@ and to the right independently, then this will take O(DIVIDER_ELEMENTS * N^2)
 type it's self behaves like the state variables for the children.
 - There's a technique to loop top down in a way such that all the next transition states are calculated first before going there.
 Example question: [Bad Luck Island](./CodeForces/540D.cpp)
+- In Dp, often you need to get the next state by taking min / max or sum of dp of all previous states.
+  - In those cases, consider having two dp's, one for the actual answer and another for containing
+    the aggregation of all previous values.
+  - Example: [Obsessive String](https://codeforces.com/contest/494/problem/B)
 
 ```cpp
 // Let's say we have A, B, C limits and we know dp(A, B, C);
@@ -539,3 +544,8 @@ In this algorithm, let's say we try to relax i to j using k, then k would be the
 ## Probability
 
 Most of the probability questions are calculated via dp.
+
+# General Ideas
+
+- If you have an optimisation problem, then always thinks of doing it via binary search as
+  optimisation problems often have a non - decreasing, non-increasing or mountain shaped curved.
