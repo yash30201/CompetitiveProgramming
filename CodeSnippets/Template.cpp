@@ -13,22 +13,20 @@ template <typename T>
 using ordered_set =
     tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-using vi = vector<int>;
-using vll = vector<long long>;
-using vb = vector<bool>;
+template <typename T> using v = vector<T>;
+template <typename T> using vv = vector<vector<T>>;
+template <typename T> using vvv = vector<vector<vector<T>>>;
+template <typename P, typename Q> pp = pair<P, Q>;
 using pii = pair<int, int>;
 using pll = pair<long long, long long>;
 using vpii = vector<pair<int, int>>;
 using vpll = vector<pair<long long, long long>>;
 
 template <typename T>
-using _pq = priority_queue<T>;
+using pq = priority_queue<T>;
 
 template <typename T>
-using _pqr = priority_queue<T, vector<T>, greater<T>>;
-
-template <typename P, typename Q>
-using _p = pair<P, Q>;
+using pqr = priority_queue<T, vector<T>, greater<T>>;
 
 struct custom_hash {
     static uint64_t splitmix64(uint64_t x) {
@@ -66,6 +64,7 @@ const int INF = int(1e9);
 const ll INFL = ll(1e18);
 const int mod = 1000000007;
 using ull = unsigned long long;
+using ld = long double;
 
 int n_ones(int x) { return __builtin_popcount(x); }
 int n_ones(ll x) { return __builtin_popcountll(x); }
@@ -78,9 +77,8 @@ int n_ones(ll x) { return __builtin_popcountll(x); }
 #define pub push_back
 #define fi first
 #define se second
-#define lb lower_bound
-#define up upper_bound
 #define endl '\n'
+#define PrintFixed(t, x) cout << fixed << setprecision(x) << t << endl;
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 template <typename P, typename Q>
@@ -97,8 +95,25 @@ ostream& operator<<(ostream& out, const vector<T>& a) {
     return out;
 }
 
+template <typename T, std::size_t S>
+ostream& operator<<(ostream& out, const array<T, S>& a) {
+    for (int i = 0; i < S; i++) {
+        if (i) out << ' ';
+        out << a[i];
+    }
+    return out;
+}
+
 template <typename P, typename Q>
 ostream& operator<<(ostream& out, const map<P, Q>& a) {
+    out << "\n[\n";
+    for (auto& [key, val] : a) out << "  " << key << " => " << val << endl;
+    return out << "]\n";
+}
+
+
+template <typename P, typename Q>
+ostream& operator<<(ostream& out, const ump<P, Q>& a) {
     out << "\n[\n";
     for (auto& [key, val] : a) out << "  " << key << " => " << val << endl;
     return out << "]\n";
@@ -111,6 +126,13 @@ ostream& operator<<(ostream& out, const set<T>& a) {
     return out << "]\n";
 }
 
+template <typename T>
+ostream& operator<<(ostream& out, const us<T>& a) {
+    out << "[";
+    for (const T& i : a) out << i << ", ";
+    return out << "]\n";
+}
+
 template <typename P, typename Q>
 istream& operator>>(istream& in, pair<P, Q>& a) {
     return in >> a.fi >> a.se;
@@ -118,6 +140,12 @@ istream& operator>>(istream& in, pair<P, Q>& a) {
 
 template <typename T>
 istream& operator>>(istream& in, vector<T>& a) {
+    for (T& i : a) in >> i;
+    return in;
+}
+
+template <typename T, size_t S>
+istream& operator>>(istream& in, array<T, S>& a) {
     for (T& i : a) in >> i;
     return in;
 }
@@ -186,7 +214,7 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-
+    
     return;
 }
 

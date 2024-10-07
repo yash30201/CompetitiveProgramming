@@ -42,9 +42,9 @@
     - [All Source Shortest Path: Floyd Warshall](#all-source-shortest-path-floyd-warshall)
 - [Mathematics](#mathematics)
   - [Probability](#probability)
+  - [General Mathematics](#general-mathematics)
 - [General Ideas](#general-ideas)
 <!-- /TOC -->
-
 
 # Data Structures
 
@@ -544,6 +544,15 @@ In this algorithm, let's say we try to relax i to j using k, then k would be the
 ## Probability
 
 Most of the probability questions are calculated via dp.
+
+## General Mathematics
+
+- Suppose you have A, B, C, D intergers where you can procure A apples at price B for all A apples
+and C apples at price C for all C apples. To find out what is the minimum price require to get Z
+apples, let us consider that A / B > C / D, then let's say we take j * C  apples for price D. Now
+price = D(x + y) where x + y = j && D * x is a multiple of A, then we can always increate D * x / A apples
+for a better price than raising D * x apples, hence the loop for j would only be for [0, A].
+  - Example usage: [AtCoder Sensor Optimisation 2](https://codeforces.com/blog/entry/134738?#comment-1205433)
 
 # General Ideas
 
