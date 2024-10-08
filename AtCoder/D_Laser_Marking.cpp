@@ -13,10 +13,6 @@ template <typename T>
 using ordered_set =
     tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
-template <typename T> using v = vector<T>;
-template <typename T> using vv = vector<vector<T>>;
-template <typename T> using vvv = vector<vector<vector<T>>>;
-template <typename P, typename Q> using pp = pair<P, Q>;
 using vi = vector<int>;
 using vll = vector<long long>;
 using vb = vector<bool>;
@@ -26,10 +22,13 @@ using vpii = vector<pair<int, int>>;
 using vpll = vector<pair<long long, long long>>;
 
 template <typename T>
-using pq = priority_queue<T>;
+using _pq = priority_queue<T>;
 
 template <typename T>
-using pqr = priority_queue<T, vector<T>, greater<T>>;
+using _pqr = priority_queue<T, vector<T>, greater<T>>;
+
+template <typename P, typename Q>
+using _p = pair<P, Q>;
 
 struct custom_hash {
     static uint64_t splitmix64(uint64_t x) {
@@ -67,7 +66,6 @@ const int INF = int(1e9);
 const ll INFL = ll(1e18);
 const int mod = 1000000007;
 using ull = unsigned long long;
-using ld = long double;
 
 int n_ones(int x) { return __builtin_popcount(x); }
 int n_ones(ll x) { return __builtin_popcountll(x); }
@@ -80,8 +78,9 @@ int n_ones(ll x) { return __builtin_popcountll(x); }
 #define pub push_back
 #define fi first
 #define se second
+#define lb lower_bound
+#define up upper_bound
 #define endl '\n'
-#define PrintFixed(t, x) cout << fixed << setprecision(x) << t << endl;
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 template <typename P, typename Q>
@@ -98,25 +97,8 @@ ostream& operator<<(ostream& out, const vector<T>& a) {
     return out;
 }
 
-template <typename T, std::size_t S>
-ostream& operator<<(ostream& out, const array<T, S>& a) {
-    for (int i = 0; i < S; i++) {
-        if (i) out << ' ';
-        out << a[i];
-    }
-    return out;
-}
-
 template <typename P, typename Q>
 ostream& operator<<(ostream& out, const map<P, Q>& a) {
-    out << "\n[\n";
-    for (auto& [key, val] : a) out << "  " << key << " => " << val << endl;
-    return out << "]\n";
-}
-
-
-template <typename P, typename Q>
-ostream& operator<<(ostream& out, const ump<P, Q>& a) {
     out << "\n[\n";
     for (auto& [key, val] : a) out << "  " << key << " => " << val << endl;
     return out << "]\n";
@@ -129,13 +111,6 @@ ostream& operator<<(ostream& out, const set<T>& a) {
     return out << "]\n";
 }
 
-template <typename T>
-ostream& operator<<(ostream& out, const us<T>& a) {
-    out << "[";
-    for (const T& i : a) out << i << ", ";
-    return out << "]\n";
-}
-
 template <typename P, typename Q>
 istream& operator>>(istream& in, pair<P, Q>& a) {
     return in >> a.fi >> a.se;
@@ -143,12 +118,6 @@ istream& operator>>(istream& in, pair<P, Q>& a) {
 
 template <typename T>
 istream& operator>>(istream& in, vector<T>& a) {
-    for (T& i : a) in >> i;
-    return in;
-}
-
-template <typename T, size_t S>
-istream& operator>>(istream& in, array<T, S>& a) {
     for (T& i : a) in >> i;
     return in;
 }
@@ -195,18 +164,18 @@ void err(istream_iterator<string> it, T a, Args... args) {
 #define see(args...)
 #endif
 
-template <typename T> T maxi(const vector<T>& a) { return *max_element(all(a)); }
-template <typename T> T maxi(const T& a) { return a; }
+int maxi(const vector<int>& a) { return *max_element(all(a)); }
+int maxi(const int& a) { return a; }
 template <typename... T>
-T maxi(const T& a, T&&... b) {
+int maxi(const int& a, T&&... b) {
     auto x = maxi(b...);
     return max(a, x);
 }
 
-template <typename T> T mini(const vector<T>& a) { return *min_element(all(a)); }
-template <typename T> T mini(const T& a) { return a; }
+int mini(const vector<int>& a) { return *min_element(all(a)); }
+int mini(const int& a) { return a; }
 template <typename... T>
-T mini(const T& a, T&&... b) {
+int mini(const int& a, T&&... b) {
     auto x = mini(b...);
     return min(a, x);
 }
@@ -217,7 +186,38 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-
+    int n, t, s;
+    ip(n, s, t);
+    vector<vector<pii>> a(n, vector<pii>(2));
+    ip(a);
+    vi per(n);
+    see(n, t, s, a);
+    iota(all(per), 0);
+    long double res = INFL;
+    int N = 1 << n;
+    auto GetDist = [](pii x, pii y) -> long double {
+        return sqrtl((x.fi - y.fi) * (x.fi - y.fi) + (x.se - y.se) * (x.se - y.se));
+    };
+    auto get = [&]() -> long double {
+        long double r = INFL;
+        FOR(mask, 0, N) {
+            pii prev = {0, 0};
+            long double curr = 0;
+            FOR(ii, 0, n) {
+                int i = per[ii];
+                int j = n_ones(mask & (1 << i));
+                curr += GetDist(prev, a[i][j]) / s;
+                curr += GetDist(a[i][j], a[i][1 - j]) / t;
+                prev = a[i][1 - j];
+            }
+            r = min(r, curr);
+        }
+        return r;
+    };
+    do {
+        res = min(res, get());
+    } while (next_permutation(all(per)));
+    printf("%.12Lf\n", res);
     return;
 }
 
@@ -226,7 +226,7 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
     return 0;
 }

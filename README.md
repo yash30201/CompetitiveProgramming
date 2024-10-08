@@ -42,8 +42,9 @@
     - [All Source Shortest Path: Floyd Warshall](#all-source-shortest-path-floyd-warshall)
 - [Mathematics](#mathematics)
   - [Probability](#probability)
+  - [General Mathematics](#general-mathematics)
+- [General Ideas](#general-ideas)
 <!-- /TOC -->
-
 
 # Data Structures
 
@@ -329,6 +330,10 @@ and to the right independently, then this will take O(DIVIDER_ELEMENTS * N^2)
 type it's self behaves like the state variables for the children.
 - There's a technique to loop top down in a way such that all the next transition states are calculated first before going there.
 Example question: [Bad Luck Island](./CodeForces/540D.cpp)
+- In Dp, often you need to get the next state by taking min / max or sum of dp of all previous states.
+  - In those cases, consider having two dp's, one for the actual answer and another for containing
+    the aggregation of all previous values.
+  - Example: [Obsessive String](https://codeforces.com/contest/494/problem/B)
 
 ```cpp
 // Let's say we have A, B, C limits and we know dp(A, B, C);
@@ -539,3 +544,24 @@ In this algorithm, let's say we try to relax i to j using k, then k would be the
 ## Probability
 
 Most of the probability questions are calculated via dp.
+
+## General Mathematics
+
+- Suppose you have A, B, C, D intergers where you can procure A apples at price B for all A apples
+and C apples at price C for all C apples. To find out what is the minimum price require to get Z
+apples, let us consider that A / B > C / D, then let's say we take j * C  apples for price D. Now
+price = D(x + y) where x + y = j && D * x is a multiple of A, then we can always increate D * x / A apples
+for a better price than raising D * x apples, hence the loop for j would only be for [0, A].
+  - Example usage: [AtCoder Sensor Optimisation 2](https://codeforces.com/blog/entry/134738?#comment-1205433)
+- Count pair of indices in an array which has gcd of [1, 2, .... Max Element of array]
+  - We apply inclusion exclusion principle of dp here
+  - Compute all the multiple count for each number in 1 to MAX (as these are the GCD candidates)
+  - For us to have gcd x, we'll initialize the answer as x = cnt[x] * (cnt[x] - 1) / 2;
+  - The counted pairs are extra as there would be pairs which have gcds which are multiple of x
+  - Hence subtract all the gcd counts for i = [2x, 3x, ....$Z * x] such that $Z * x <= MAX
+  - Example question: [Leetcode - sorted gcd pairs](https://leetcode.com/problems/sorted-gcd-pair-queries/description/)
+
+# General Ideas
+
+- If you have an optimisation problem, then always thinks of doing it via binary search as
+  optimisation problems often have a non - decreasing, non-increasing or mountain shaped curved.
