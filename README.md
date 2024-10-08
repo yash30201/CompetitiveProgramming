@@ -553,6 +553,13 @@ apples, let us consider that A / B > C / D, then let's say we take j * C  apples
 price = D(x + y) where x + y = j && D * x is a multiple of A, then we can always increate D * x / A apples
 for a better price than raising D * x apples, hence the loop for j would only be for [0, A].
   - Example usage: [AtCoder Sensor Optimisation 2](https://codeforces.com/blog/entry/134738?#comment-1205433)
+- Count pair of indices in an array which has gcd of [1, 2, .... Max Element of array]
+  - We apply inclusion exclusion principle of dp here
+  - Compute all the multiple count for each number in 1 to MAX (as these are the GCD candidates)
+  - For us to have gcd x, we'll initialize the answer as x = cnt[x] * (cnt[x] - 1) / 2;
+  - The counted pairs are extra as there would be pairs which have gcds which are multiple of x
+  - Hence subtract all the gcd counts for i = [2x, 3x, ....$Z * x] such that $Z * x <= MAX
+  - Example question: [Leetcode - sorted gcd pairs](https://leetcode.com/problems/sorted-gcd-pair-queries/description/)
 
 # General Ideas
 

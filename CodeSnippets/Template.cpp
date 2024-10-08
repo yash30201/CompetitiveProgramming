@@ -16,7 +16,10 @@ using ordered_set =
 template <typename T> using v = vector<T>;
 template <typename T> using vv = vector<vector<T>>;
 template <typename T> using vvv = vector<vector<vector<T>>>;
-template <typename P, typename Q> pp = pair<P, Q>;
+template <typename P, typename Q> using pp = pair<P, Q>;
+using vi = vector<int>;
+using vll = vector<long long>;
+using vb = vector<bool>;
 using pii = pair<int, int>;
 using pll = pair<long long, long long>;
 using vpii = vector<pair<int, int>>;
@@ -192,18 +195,18 @@ void err(istream_iterator<string> it, T a, Args... args) {
 #define see(args...)
 #endif
 
-int maxi(const vector<int>& a) { return *max_element(all(a)); }
-int maxi(const int& a) { return a; }
+template <typename T> T maxi(const vector<T>& a) { return *max_element(all(a)); }
+template <typename T> T maxi(const T& a) { return a; }
 template <typename... T>
-int maxi(const int& a, T&&... b) {
+T maxi(const T& a, T&&... b) {
     auto x = maxi(b...);
     return max(a, x);
 }
 
-int mini(const vector<int>& a) { return *min_element(all(a)); }
-int mini(const int& a) { return a; }
+template <typename T> T mini(const vector<T>& a) { return *min_element(all(a)); }
+template <typename T> T mini(const T& a) { return a; }
 template <typename... T>
-int mini(const int& a, T&&... b) {
+T mini(const T& a, T&&... b) {
     auto x = mini(b...);
     return min(a, x);
 }
@@ -214,7 +217,7 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-    
+
     return;
 }
 
