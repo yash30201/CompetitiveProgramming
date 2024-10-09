@@ -195,30 +195,34 @@ void err(istream_iterator<string> it, T a, Args... args) {
 #define see(args...)
 #endif
 
-template <typename T> T maxi(const vector<T>& a) { return *max_element(all(a)); }
-template <typename T> T maxi(const T& a) { return a; }
-template <typename P, typename... T>
-P maxi(const P& a, T&&... b) {
-    P x = static_cast<P>maxi(b...);
-    return max(a, x);
-}
-
-template <typename T> T mini(const vector<T>& a) { return *min_element(all(a)); }
-template <typename T> T mini(const T& a) { return a; }
-template <typename P, typename... T>
-P mini(const P& a, T&&... b) {
-    P x = static_cast<P>mini(b...);
-    return mini(a, x);
-}
-
 int px[] = {-1, 0, 1, 0};
 int py[] = {0, -1, 0, 1};
 string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-
-    return;
+    int l, r;
+    ip(l, r);
+    int x = l;
+    ll res = 0;
+    while (x) {
+        res += 2;
+        x /= 3;
+    }
+    vi a{0, 3};
+    const int III = 3e7;
+    l++;
+    do {
+        a.push_back(a.back() * 3);
+    } while (a.back() < III);
+    do {
+        int id = upper_bound(all(a), l) - a.begin();
+        int val = a[id];
+        int cnt = min(r, val - 1) - l + 1;
+        res += 1LL * id * cnt;
+        l = val;
+    } while (l <= r);
+    op(res);
 }
 
 int main() {

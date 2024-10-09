@@ -195,29 +195,56 @@ void err(istream_iterator<string> it, T a, Args... args) {
 #define see(args...)
 #endif
 
-template <typename T> T maxi(const vector<T>& a) { return *max_element(all(a)); }
-template <typename T> T maxi(const T& a) { return a; }
-template <typename P, typename... T>
-P maxi(const P& a, T&&... b) {
-    P x = static_cast<P>maxi(b...);
-    return max(a, x);
-}
-
-template <typename T> T mini(const vector<T>& a) { return *min_element(all(a)); }
-template <typename T> T mini(const T& a) { return a; }
-template <typename P, typename... T>
-P mini(const P& a, T&&... b) {
-    P x = static_cast<P>mini(b...);
-    return mini(a, x);
-}
 
 int px[] = {-1, 0, 1, 0};
 int py[] = {0, -1, 0, 1};
 string path_trace_dir = "DRUL";
 
+struct BinomialCoefficients{
+    vector<int> fact, inverse;
+
+    void build(int n){
+        fact = vector<int>(n+1, 1);
+        inverse = vector<int>(n+1, 1);
+        for(int i = 2 ; i <= n ; i++){
+            fact[i] = 1LL * fact[i-1] * i % mod;
+            inverse[i] = getPower(fact[i], mod-2);
+        }
+    }
+
+    int getPower(int x, int y){
+        int res = 1;
+        while(y){
+            if(y & 1) res = 1LL * res * x % mod;
+            y >>= 1;
+            x = 1LL * x * x % mod;
+        }
+        return res;
+    }
+    
+    inline int getNcr(int n, int r){
+        return (n >= r ? 1LL * fact[n] * inverse[r] % mod * inverse[n-r] % mod : 0); 
+    }
+};
+BinomialCoefficients bc;
 void solve() {
     // Let's begin
-
+    int n, k;
+    ip(n, k);
+    int res = 0;
+    vi a(n);
+    ip(a);
+    sort(all(a));
+    int m = ((k + 1) / 2) - 1;
+    FOR(i, m, n) {
+        if (a[i] == 0) {
+            continue;
+        }
+        // see(i, m);
+        int x = 1LL * bc.getNcr(i, m) * bc.getNcr(n - i - 1, m) % mod;
+        res = (res + x) % mod;
+    } 
+    op(res);
     return;
 }
 
@@ -226,6 +253,8 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
     int t = 1;
+    int M = 2e5 + 10;
+    bc.build(M);
     cin >> t;
     while (t--) solve();
     return 0;
