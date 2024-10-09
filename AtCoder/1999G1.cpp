@@ -80,7 +80,6 @@ int n_ones(ll x) { return __builtin_popcountll(x); }
 #define pub push_back
 #define fi first
 #define se second
-#define endl '\n'
 #define PrintFixed(t, x) cout << fixed << setprecision(x) << t << endl;
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
@@ -195,29 +194,45 @@ void err(istream_iterator<string> it, T a, Args... args) {
 #define see(args...)
 #endif
 
-template <typename T> T maxi(const vector<T>& a) { return *max_element(all(a)); }
-template <typename T> T maxi(const T& a) { return a; }
-template <typename P, typename... T>
-P maxi(const P& a, T&&... b) {
-    P x = static_cast<P>maxi(b...);
-    return max(a, x);
-}
-
-template <typename T> T mini(const vector<T>& a) { return *min_element(all(a)); }
-template <typename T> T mini(const T& a) { return a; }
-template <typename P, typename... T>
-P mini(const P& a, T&&... b) {
-    P x = static_cast<P>mini(b...);
-    return mini(a, x);
-}
-
 int px[] = {-1, 0, 1, 0};
 int py[] = {0, -1, 0, 1};
 string path_trace_dir = "DRUL";
-
+int ask(int x, int y) {
+    cout << "? " << x << " " << y << endl;
+    int z;
+    cin >> z;
+    return z;
+}
+void say(int x) {
+    cout << "! " << x << endl;
+}
 void solve() {
     // Let's begin
-
+    int l = 1, r = 1001;
+    while (r - l > 3) {
+        int d = (r - l) / 3;
+        int m1 = l + d, m2 = r - d;
+        int x = ask(m1, m2);
+        if (x == (m1 + 1) * (m2 + 1)) {
+            r = m1 + 1;
+        } else if (x == m1 * (m2 + 1)) {
+            l = m1 + 1, r = m2 + 1;
+        } else {
+            l = m2 + 1;
+        }
+    }
+    if (r - l == 1) say(l);
+    else if (r - l == 2) {
+        if (ask(l, l + 1) == (l + 1) * (l + 2)) say(l);
+        else say(l + 1);
+    } else {
+        if (ask(l, l + 1) == (l + 1) * (l + 2)) say(l);
+        else {
+            if (ask(l + 1, l + 2) == (l + 2) * (l + 3)) say(l + 1);
+            else say(l + 2);
+        }
+    }
+    
     return;
 }
 
