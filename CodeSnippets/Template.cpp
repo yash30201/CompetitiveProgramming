@@ -217,7 +217,7 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-    op("YES");
+
     return;
 }
 
