@@ -215,46 +215,48 @@ int px[] = {-1, 0, 1, 0};
 int py[] = {0, -1, 0, 1};
 string path_trace_dir = "DRUL";
 
+class LazyPushArray {
+    vector<int> a;
+public:
+    LazyPushArray(int m) : a(m + 2, 0) {}
+    void rangeAdd(int l, int r) {
+        if (r < l) return;
+        ++a[l];
+        --a[r + 1];
+    }
+    void process(vector<int>& b, int x) {
+        int curr = 0;
+        for (int i = 0 ; i < (int)a.size() ; i++) {
+            curr += a[i];
+            a[i] = 0;
+            if (i <= x) b[i] += curr;
+        }
+    }
+};
+
 void solve() {
     // Let's begin
-    int n, m;
+    int n, m, val, tot = 0;
     ip(n, m);
-    vi a(n);
-    ip(a);
-    vi b;
-    vv<int> c(m + 1);
-    FOR(i, 0, n) {
-        if (a[i] == 0) {
-            sort(all(c[b.size()]));
-            b.push_back(i);
-        }
-        else {
-            c[b.size()].push_back(a[i]);
-        }
-    }
-    vv<int> dp(m + 1, v<int>(m + 1, -INF));
-    dp[0][0] = 0;
-    b.push_back(n);
-    auto gtx = [](v<int>& d, int x) -> int {
-        return sz(d) - (upper_bound(all(d), x) - d.begin());
-    };
-    FOR(i, 0, m) {
-        FOR(j, 0, i + 2) {
-            int intel = j;
-            int stren = i + 1 - intel;
-            int satis = 0;
-            if (intel) dp[intel][stren] = max(dp[intel][stren], dp[intel - 1][stren]);
-            if (stren) dp[intel][stren] = max(dp[intel][stren], dp[intel][stren - 1]);
-            satis += gtx(c[i + 1], 0) - gtx(c[i + 1], intel);
-            satis += gtx(c[i + 1], -stren - 1) - gtx(c[i + 1], -1);
-            // see(i, j, satis, c[i]);
-            if (intel) dp[intel][stren] = max(dp[intel][stren], dp[intel - 1][stren] + satis);
-            if (stren) dp[intel][stren] = max(dp[intel][stren], dp[intel][stren - 1] + satis);
+    LazyPushArray a(m);
+    v<int> dp(m + 1, -INF);
+    dp[0] = 0;
+    while (n--) {
+        ip(val);
+        if (val > 0) {
+            a.rangeAdd(val, tot);
+        } else if (val < 0) {
+            a.rangeAdd(0, tot + val);
+        } else {
+            a.process(dp, tot);
+            tot++;
+            FORD(intel, 1, tot + 1) {
+                dp[intel] = max(dp[intel], dp[intel-1]);
+            }
         }
     }
-    int res = 0;
-    FOR(i, 0, m + 1) res = maxi(res, dp[i]);
-    op(res);
+    a.process(dp, tot);
+    op(maxi(dp));
     return;
 }
 
