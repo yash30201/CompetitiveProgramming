@@ -26,6 +26,7 @@
   - [Dynamic Programming](#dynamic-programming)
   - [Array](#array)
     - [Longest Increasing Subsequence](#longest-increasing-subsequence)
+    - [Convert array into a good array](#convert-array-into-a-good-array)
   - [Pure BFS](#pure-bfs)
     - [Shortest path of even length](#shortest-path-of-even-length)
   - [Pure DFS](#pure-dfs)
@@ -369,6 +370,13 @@ FORE(i, a) {
 }
 op(lis.size());
 ```
+
+### Convert array into a good array
+
+A good array is an non decreasing array where difference between adjacent elements are atmost 1. </br>
+Given an array, we need to check if it can be converted into a non decreasing array by transfering values from right to left, i.e., for `i < j`, we can do `a[i]++ and a[j]--`.
+
+This can be checked with creating the final answer array and then checking if any prefix sum of original array is greater than the final answer array. [code pointer](https://atcoder.jp/contests/arc185/submissions/58926710)
 
 ## Pure BFS
 
