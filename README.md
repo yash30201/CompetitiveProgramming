@@ -573,3 +573,5 @@ for a better price than raising D * x apples, hence the loop for j would only be
 
 - If you have an optimisation problem, then always thinks of doing it via binary search as
   optimisation problems often have a non - decreasing, non-increasing or mountain shaped curved.
+- When there are conditions in the problem, try to think about what would happen if we relax the conditions a bit.
+- You can model a grid as a bipartite graph between rows and columns having n * m edges between them.
