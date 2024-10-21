@@ -7,8 +7,8 @@
 using namespace std;
 using namespace __gnu_pbds;
 
-// find_by_order -> kth largest element (0 based)
-// order_of_key -> number of iterms strictly smaller than key (0 based)
+// find_by_order -> value at index (0 based)
+// order_of_key -> index of value (0 based)
 template <typename T>
 using ordered_set =
     tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
@@ -217,7 +217,55 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-
+    int n,q;
+    ip(n, q);
+    vi a(n), Q(q);
+    ip(a);
+    string s;
+    ip(s);
+    ip(Q);
+    us<int> st;
+    v<int> d(n + 1);
+    FOR(i, 0, n) {
+        int l = min(i, a[i] - 1), r = max(i, a[i] - 1);
+        d[l]++;
+        d[r]--;
+    }
+    int cnt = 0;
+    FOR(i, 0, n) {
+        if (d[i]) {
+            st.insert(i);
+            if (s[i] == 'L' && s[i + 1] == 'R') cnt++;
+        }
+        d[i + 1] += d[i];
+    }
+    FOR(j, 0, q) {
+        int i = Q[j] - 1;
+        if (i && s[i] == 'R' && s[i - 1] == 'L') {
+            if (st.count(i-1)) {
+                cnt--;
+            }
+        }
+        if (i + 1 < n && s[i] == 'L' && s[i+1] == 'R') {
+            if (st.count(i)) {
+                cnt--;
+            }
+        }
+        s[i] = (s[i] == 'L' ? 'R' : 'L');
+        if (i && s[i] == 'R' && s[i - 1] == 'L') {
+            if (st.count(i-1)) {
+                cnt++;
+            }
+        }
+        if (i + 1 < n && s[i] == 'L' && s[i+1] == 'R') {
+            if (st.count(i)) {
+                cnt++;
+            }
+        }
+        if (cnt == 0) op("YES");
+        else op("NO");
+    }
+    
     return;
 }
 
