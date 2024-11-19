@@ -214,10 +214,34 @@ P mini(const P& a, T&&... b) {
 int px[] = {-1, 0, 1, 0};
 int py[] = {0, -1, 0, 1};
 string path_trace_dir = "DRUL";
+int n, m;
+v<int> a, b;
+v<ll> pre;
+vv<int> dp;
+int recurr(int ia, int ib) {
+    if (ia >= n) return 0;
+    if (ib == m) return INF;
+    if (dp[ia][ib] != -1) return dp[ia][ib];
+    int idx = upper_bound(all(pre), pre[ia] + b[ib]) - pre.begin();
+    int res = recurr(ia, ib + 1);
+    if (idx > ia + 1) {
+        res = min(res, m - ib - 1 + recurr(idx - 1, ib));
+    }
+    return dp[ia][ib] = res;
+}
 
 void solve() {
     // Let's begin
-
+    ip(n, m);
+    a.resize(n), b.resize(m);
+    ip(a, b);
+    pre.resize(n + 1);
+    pre[0] = 0;
+    FOR(i, 0, n) pre[i + 1] = pre[i] + a[i];
+    dp = vv<int>(n, v<int>(m, -1));
+    int res = recurr(0, 0);
+    if (res == INF) res = -1;
+    op(res);
     return;
 }
 

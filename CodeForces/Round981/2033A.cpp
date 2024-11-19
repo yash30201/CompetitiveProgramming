@@ -217,7 +217,13 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-
+    int n;
+    ip(n);
+    if (n & 1) {
+        op("Kosuke");
+    } else {
+        op("Sakurako");
+    }
     return;
 }
 

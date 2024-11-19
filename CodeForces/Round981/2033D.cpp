@@ -217,7 +217,24 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-
+    int n;
+    ip(n);
+    v<int> a(n), dp(n+1, 0);
+    ip(a);
+    ump<ll, int> mp;
+    ll curr = 0;
+    int res = 0;
+    mp[0] = 0;
+    FOR(i, 0, n) {
+        curr += a[i];
+        dp[i + 1] = dp[i];
+        if (mp.count(curr)) {
+            dp[i + 1] = max(dp[i+1], dp[mp[curr]] + 1);
+        }
+        mp[curr] = i + 1;
+        res = max(res, dp[i + 1]);
+    }
+    op(res);
     return;
 }
 

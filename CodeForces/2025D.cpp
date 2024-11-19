@@ -7,8 +7,8 @@
 using namespace std;
 using namespace __gnu_pbds;
 
-// find_by_order -> kth largest element (0 based)
-// order_of_key -> number of iterms strictly smaller than key (0 based)
+// find_by_order -> value at index (0 based)
+// order_of_key -> index of value (0 based)
 template <typename T>
 using ordered_set =
     tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
@@ -215,9 +215,48 @@ int px[] = {-1, 0, 1, 0};
 int py[] = {0, -1, 0, 1};
 string path_trace_dir = "DRUL";
 
+class LazyPushArray {
+    vector<int> a;
+public:
+    LazyPushArray(int m) : a(m + 2, 0) {}
+    void rangeAdd(int l, int r) {
+        if (r < l) return;
+        ++a[l];
+        --a[r + 1];
+    }
+    void process(vector<int>& b, int x) {
+        int curr = 0;
+        for (int i = 0 ; i < (int)a.size() ; i++) {
+            curr += a[i];
+            a[i] = 0;
+            if (i <= x) b[i] += curr;
+        }
+    }
+};
+
 void solve() {
     // Let's begin
-
+    int n, m, val, tot = 0;
+    ip(n, m);
+    LazyPushArray a(m);
+    v<int> dp(m + 1, -INF);
+    dp[0] = 0;
+    while (n--) {
+        ip(val);
+        if (val > 0) {
+            a.rangeAdd(val, tot);
+        } else if (val < 0) {
+            a.rangeAdd(0, tot + val);
+        } else {
+            a.process(dp, tot);
+            tot++;
+            FORD(intel, 1, tot + 1) {
+                dp[intel] = max(dp[intel], dp[intel-1]);
+            }
+        }
+    }
+    a.process(dp, tot);
+    op(maxi(dp));
     return;
 }
 
@@ -226,7 +265,7 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
     return 0;
 }

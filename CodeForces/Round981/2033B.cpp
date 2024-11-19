@@ -217,7 +217,32 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-
+    int n;
+    ip(n);
+    int res = 0;
+    vv<int> a(n, v<int>(n));
+    ip(a);
+    FOR(i1, 0, n) {
+        int m = 0;
+        int i = i1, j = 0;
+        while (i < n) {
+            m = min(m, a[i][j]);
+            i++;
+            j++;
+        }
+        if (m < 0) res -= m;
+    }
+    FOR(j1, 1, n) {
+        int m = 0;
+        int i = 0, j = j1;
+        while (j < n) {
+            m = min(m, a[i][j]);
+            i++;
+            j++;
+        }
+        if (m < 0) res -= m;
+    }
+    op(res);
     return;
 }
 

@@ -217,7 +217,10 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-
+    int a, b;
+    ip(a, b);
+    int x = max(0, b - a);
+    op(max(0, a - x));
     return;
 }
 

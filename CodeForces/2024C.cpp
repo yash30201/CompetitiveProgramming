@@ -217,7 +217,15 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-
+    int n;
+    ip(n);
+    v<pii> a(n);
+    ip(a);
+    sort(all(a), [](const pii& x, const pii& y){
+        return x.fi + x.se < y.fi + y.se;
+    });
+    FOR(i, 0, n) cout << a[i].fi << ' ' << a[i].se << ' ';
+    cout << endl;
     return;
 }
 

@@ -217,7 +217,41 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-
+    int n;
+    ip(n);
+    v<ll> a(n);
+    ip(a);
+    v<int> b(n);
+    ip(b);
+    vector<pii> g[n];
+    FOR(i, 0, n) {
+        if (i) {
+            g[i].pub({i-1, 0});
+        }
+        if (i + 1 < b[i]) g[i].push_back({b[i] - 1, a[i]});
+    }
+    v<ll> dist(n, INFL);
+    dist[0] = 0;
+    pqr<pll> min_heap;
+    min_heap.push({0LL, 0LL});
+    while (!min_heap.empty()) {
+        auto [d, from] = min_heap.top();
+        min_heap.pop();
+        // see(d, from, dist[from]);
+        if (d > dist[from]) continue;
+        for (auto [to, dx] : g[from]) {
+            if (dist[to] > dist[from] + dx) {
+                dist[to] = dist[from] + dx;
+                min_heap.push({dist[to], (ll)to});
+            }
+        }
+    }
+    ll curr = 0, res = 0;
+    FOR(i, 0, n) {
+        curr += a[i];
+        res = max(res, curr - dist[i]);
+    }
+    op(res);
     return;
 }
 

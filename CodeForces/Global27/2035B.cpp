@@ -217,7 +217,29 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-
+    int n;
+    ip(n);
+    string s(n, '3');
+    int osum = 0, esum = 0;
+    if (n == 1) {
+        op(-1);
+    } else if (n == 2) {
+        op(66);
+    } else if (n == 3) {
+        op(-1);
+    } else if (n == 4) {
+        op(3366);
+    } else if (n & 1) {
+        int ex = n - 4;
+        string s(ex, '3');
+        s += "6366";
+        op(s);
+    } else {
+        int ex = n - 2;
+        string s(ex, '3');
+        s += "66";
+        op(s);
+    }
     return;
 }
 

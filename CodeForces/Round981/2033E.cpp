@@ -215,9 +215,33 @@ int px[] = {-1, 0, 1, 0};
 int py[] = {0, -1, 0, 1};
 string path_trace_dir = "DRUL";
 
+int dfs(v<int> &g, v<bool>& stat, int node) {
+    stat[node] = true;
+    if (stat[g[node]]) {
+        return 1;
+    } else return dfs(g, stat, g[node]) + 1;
+}
+
 void solve() {
     // Let's begin
-
+    int n;
+    ip(n);
+    v<int> g(n);
+    FOR(i, 0, n) {
+        int x;
+        ip(x);
+        x--;
+        g[x] = i;
+    }
+    int res = 0;
+    v<bool> stat(n, false);
+    FOR(i, 0, n) {
+        if (!stat[i]) {
+            int x = dfs(g, stat, i);
+            res += (x - 1) / 2;
+        }
+    }
+    op(res);
     return;
 }
 

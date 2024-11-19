@@ -217,7 +217,56 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-
+    int n;
+    ip(n);
+    v<int> a(n);
+    iota(all(a), 1);
+    if (n & 1) {
+        swap(a[0], a[n - 4]);
+    } else {
+        // swap(a[2], a[n - 4]);
+        // swap(a[0], a[n - 5]);
+        string s;
+        int x = n;
+        while (x) {
+            if (x & 1) s.pub('1');
+            else s.pub('0');
+            x >>= 1;
+        }
+        x = 0;
+        while (!s.empty()) {
+            x <<= 1;
+            if (s.back() == '0') x |= 1;
+            s.pop_back();
+        }
+        int i1 = x;
+        int i2;
+        i1--;
+        if (x == 1) {
+            swap(a[0], a[n-4]);
+            swap(a[2], a[n-3]);
+            swap(a[4], a[n-2]);
+        } else if (x == 3) {
+            swap(a[0], a[n-4]);
+            swap(a[2], a[n-3]);
+            swap(a[6], a[n-2]);
+        } else {
+            i2 = x & (x - 1);
+            i2--;
+            // see(x, i2);
+            swap(a[i1], a[n-2]);
+            swap(a[i2], a[n-3]);
+            swap(a[0], a[n-5]);
+            swap(a[2], a[n-4]);
+        }
+    }
+    int k = 0;
+    FOR(i, 0, n) {
+        if (i & 1) k |= a[i];
+        else k &= a[i];
+    }
+    op(k);
+    op(a);
     return;
 }
 

@@ -215,9 +215,36 @@ int px[] = {-1, 0, 1, 0};
 int py[] = {0, -1, 0, 1};
 string path_trace_dir = "DRUL";
 
+
+
 void solve() {
     // Let's begin
-
+    int n;
+    ll res = 0;
+    ip(n);
+    v<ll> a(n);
+    ip(a);
+    v<pair<ll, int>> req;
+    ll exp = n;
+    FOR(i, 0, n) {
+        if (a[i] >= exp) {
+            req.pub({a[i] - exp, i});
+        }
+        exp--;
+    }
+    sort(all(req));
+    // see(req);
+    int m = req.size();
+    ump<ll, ll> dp;
+    dp[0] = n;
+    FOR(i, 0, m) {
+        if (dp.count(req[i].fi) == 0) continue;
+        ll x = req[i].fi + req[i].se;
+        if (dp.count(x)) dp[x] = max(dp[x], dp[req[i].fi] + req[i].se);
+        else dp[x] = dp[req[i].fi] + req[i].se;
+    }
+    for (auto [key, val] : dp) res = max(res, val);
+    op(res);
     return;
 }
 

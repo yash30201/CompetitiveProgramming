@@ -7,8 +7,8 @@
 using namespace std;
 using namespace __gnu_pbds;
 
-// find_by_order -> kth largest element (0 based)
-// order_of_key -> number of iterms strictly smaller than key (0 based)
+// find_by_order -> value at index (0 based)
+// order_of_key -> index of value (0 based)
 template <typename T>
 using ordered_set =
     tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
@@ -217,7 +217,30 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
-
+    int n, k;
+    ip(n, k);
+    v<int> a(n);
+    ip(a);
+    sort(all(a));
+    int curr = 1, res = 1, l = 0;
+    for (int i = 1 ; i < n ; i++) {
+        if (a[i] == a[i - 1]) {
+            res = max(res, i - l + 1);
+            continue;
+        }
+        if (a[i] == a[i - 1] + 1) curr++;
+        else {
+            curr = 1, l = i;
+            res = max(res, i - l + 1);
+            continue;
+        }
+        while (curr > k) {
+            if (a[l] != a[l + 1]) curr--;
+            l++;
+        }
+        res = max(res, i - l + 1);
+    }
+    op(res);
     return;
 }
 

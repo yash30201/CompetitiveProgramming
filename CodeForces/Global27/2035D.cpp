@@ -214,10 +214,35 @@ P mini(const P& a, T&&... b) {
 int px[] = {-1, 0, 1, 0};
 int py[] = {0, -1, 0, 1};
 string path_trace_dir = "DRUL";
-
+long long binexp(long long a, long long b) {
+    a %= mod;
+    long long res = 1;
+    while (b > 0) {
+        if (b & 1)
+            res = res * a % mod;
+        a = a * a % mod;
+        b >>= 1;
+    }
+    return res;
+}
 void solve() {
     // Let's begin
+    int n;
+    ip(n);
+    v<int> a(n + 1), t(n + 1), b(n + 1);
+    FOR(i, 1, n + 1) {
+        int x;
+        ip(x);
+        a[i] = x;
+        int c = 0;
+        while (x % 2 == 0) {
+            c++;
+            x >>= 1;
+        }
+        t[i] = c + t[i - 1];
+    }
 
+    cout << endl;
     return;
 }
 

@@ -217,7 +217,29 @@ string path_trace_dir = "DRUL";
 
 void solve() {
     // Let's begin
+    ll x, y, z, k;
+    ip(x, y, z, k);
+    ll alpha = ceil(sqrt(z * y / x));
+    ll l = 1, r = (alpha + k - 1) / k + 1;
+    auto f = [&](ll m) -> ll {
+        ll t = m * x * k + (z + m - 1) / m * y;
+        return t;
+    };
+    see(x, y, z, k, alpha);
+    while (r - l > 4) {
+        ll d = (r - l) / 3;
+        ll m1 = l + d, m2 = r - d;
+        auto fm1 = f(m1 - 1), fm2 = f(m2);
+        if (fm1 >= fm2) l = m1;
+        if (fm2 >= fm1) r = m2;
+    }
 
+    ll res = INFL;
+    FOR(i, 0, 4) {
+        ll j = l + i;
+        res = min(res, f(j));
+    }
+    op(res);
     return;
 }
 

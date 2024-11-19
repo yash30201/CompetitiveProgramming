@@ -7,8 +7,8 @@
 using namespace std;
 using namespace __gnu_pbds;
 
-// find_by_order -> kth largest element (0 based)
-// order_of_key -> number of iterms strictly smaller than key (0 based)
+// find_by_order -> value at index (0 based)
+// order_of_key -> index of value (0 based)
 template <typename T>
 using ordered_set =
     tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
@@ -215,9 +215,32 @@ int px[] = {-1, 0, 1, 0};
 int py[] = {0, -1, 0, 1};
 string path_trace_dir = "DRUL";
 
+long long binexp(long long a, long long b) {
+    long long res = 1;
+    while (b > 0) {
+        if (b & 1) res = res * a % mod;
+        a = a * a % mod;
+        b >>= 1;
+    }
+    return res;
+}
 void solve() {
     // Let's begin
-
+    int n;
+    ip(n);
+    v<ll> N(n), K(n);
+    ip(N);
+    ip(K);
+    FOR(i, 0, n) {
+        ll res;
+        if (N[i] == K[i]) {
+            res = binexp(2, N[i]) - 1;
+            if (res < 0) res += mod;
+        } else {
+            res = binexp(2, K[i]);
+        }
+        op(res);
+    }
     return;
 }
 
@@ -226,7 +249,7 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) solve();
     return 0;
 }

@@ -214,10 +214,57 @@ P mini(const P& a, T&&... b) {
 int px[] = {-1, 0, 1, 0};
 int py[] = {0, -1, 0, 1};
 string path_trace_dir = "DRUL";
+int n, m;
+v<int> b;
+v<ll> pre;
+vv<int> dp;
+int recurr(int ia, int ib) {
+    if (ia >= n) return 0;
+    if (ib == m) return INF;
+    if (dp[ia][ib] != -1) return dp[ia][ib];
+    int idx = upper_bound(all(pre), pre[ia] + b[ib]) - pre.begin();
+    int res = recurr(ia, ib + 1);
+    if (idx > ia + 1) {
+        res = min(res, m - ib - 1 + recurr(idx - 1, ib));
+    }
+    return dp[ia][ib] = res;
+}
 
+vv<int> dpw;
+int findmin(int ia, int ib, int rem) {
+    if (ia >= n) return 1;
+    // see(ia, ib, rem, dp[ia][ib]);
+    if (rem < 0 || ib == m || dp[ia][ib] != rem) return 0;
+    if (dpw[ia][ib] != -1) return dpw[ia][ib];
+    int x = findmin(ia, ib + 1, rem);
+    int idx = upper_bound(all(pre), pre[ia] + b[ib]) - pre.begin();
+    if (idx > ia + 1) {
+        // x = min(res, m - ib - 1 + recurr(idx - 1, ib));
+        x = (x + findmin(idx - 1, ib, rem - (m - ib - 1))) % mod;
+    }
+    see(ia, ib, rem, x, idx);
+    return dpw[ia][ib] = x;
+}
 void solve() {
     // Let's begin
-
+    ip(n, m);
+    b.resize(m);
+    pre.resize(n + 1);
+    pre[0] = 0;
+    FOR(i, 0, n) {
+        ip(pre[i + 1]);
+        pre[i + 1] += pre[i];
+    }
+    ip(b);
+    dp = vv<int>(n, v<int>(m, -1));
+    dpw = vv<int>(n, v<int>(m, -1));
+    int res = recurr(0, 0);
+    if (res == INF) {
+        op(-1);
+        return;
+    }
+    int x = findmin(0, 0, res);
+    cout << res << " " << x << endl;
     return;
 }
 
