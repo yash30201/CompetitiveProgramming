@@ -565,3 +565,4 @@ for a better price than raising D * x apples, hence the loop for j would only be
 
 - If you have an optimisation problem, then always thinks of doing it via binary search as
   optimisation problems often have a non - decreasing, non-increasing or mountain shaped curved.
+- In c++, there's `__lg()` builtin method which return the msb index. For eg, (1 => 0), (16 => 4).
