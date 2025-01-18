@@ -2,41 +2,23 @@
 
 using namespace std;
 
-class FenwickTree{
+struct FenwickTree {
     vector<int> t;
     int n;
-
-    inline int calc(int x, int y) {return x + y;}
-
-    inline int impose(int bigger, int smaller) {
-        return bigger - smaller;
-    }
-
-    void updateBy(int pos, int delta) {
-        for ( ; pos < n ; pos |= (pos + 1))  t[pos] = calc(t[pos], delta);
-    }
-
-    int prefixCalc(int pos) {
-        int result = 0;
-        while (pos >= 0) {
-            result = calc(result, t[pos]);
-            pos = (pos & (pos + 1)) - 1;
-        }
-        return result;
-    }
-public:
-    FenwickTree(vector<int> &a) {
-        n = a.size();
+    FenwickTree(int nn) {
+        n = nn;
         t.assign(n, 0);
-        for (int i = 0 ; i < n ; i++) updateBy(i, a[i]);
     }
-
+    int pSum(int i) {
+        int res = 0;
+        for ( ; i >= 0 ; i = (i & (i + 1)) - 1) res += t[i];
+        return res;
+    }
+    void update(int i, int val) {
+        for ( ; i < n ; i = (i | (i + 1))) t[i] += val;
+    }
     int query(int l, int r) { // [l, r]
-        return impose(prefixCalc(r), prefixCalc(l - 1));
-    }
-
-    void update(int pos, int val) {
-        updateBy(pos, val);
+        return pSum(r) - pSum(l - 1);
     }
 };
 
@@ -49,7 +31,8 @@ void FastIO(){
 int main() {
     FastIO();
     vector<int> a{1, 3, 5, 7, 9, 11};
-    FenwickTree st(a);
+    FenwickTree st(a.size());
+    for (int i = 0 ; i < a.size() ; ++i) st.update(i, a[i]);
     assert(st.query(1, 3) == 15);
     st.update(1, 7);
     assert(st.query(1, 3) == 22);
