@@ -574,3 +574,6 @@ for a better price than raising D * x apples, hence the loop for j would only be
 - If `[start, end]` ranges are involved, then either:
   - Do bucket sorting / prefix sum kind of thing
   - Sort the ranges and then work with them
+- In an array, we can sort and remove duplicates inplace with the following two lines:
+  - `sort(nums.begin(), nums.end())`
+  - `nums.erase(std::unique(nums.begin(), nums.end()), nums.end())`
