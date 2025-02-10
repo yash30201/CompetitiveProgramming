@@ -265,6 +265,12 @@ results in:
 - In questions where we need to find number of pairs satisfying a particular
   condition, we can fix the left boundary `l` and do lowerBound and upperBound searches
   and add the pairs with `l` and points between `lowerBoundIndex` and `upperBoundIndex`.
+- When we are given two sorted array and asked to find the median / kth element, then we use the technique:
+  - Partition 1st array into two halves such that the first half has let's say x elements.
+  - Then for the second array, automatically we need to have k - x elements in the 1st half.
+  - Now we check if this is a valid assignment by checking is `max(left half for both the arrays) < min(right half of both the arrays)`
+  - If the half goes out of bound, then we take `INT_MIN` / `INT_MAX`.
+  - Example question: [Median of two sorted arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/description/)
 
 ### [Ternary Search]
 
@@ -565,3 +571,6 @@ for a better price than raising D * x apples, hence the loop for j would only be
 
 - If you have an optimisation problem, then always thinks of doing it via binary search as
   optimisation problems often have a non - decreasing, non-increasing or mountain shaped curved.
+- If `[start, end]` ranges are involved, then either:
+  - Do bucket sorting / prefix sum kind of thing
+  - Sort the ranges and then work with them
