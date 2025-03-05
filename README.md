@@ -533,6 +533,11 @@ Independently, for each edge, there might be a relaxation: O(ELogV)
 
 ```
 
+> When all the weights are either 0 or 1, then O 1 BFS can be used instead of Djsktra. Here, we use a deque
+> and for all the edges where weight is zero, we push_front, else push_back
+> !!!! Keep in mind that we don't use visited array here, we only use the distance array as a single node can be present
+> more then twice here!!!!!!!!
+
 ### Single Source Shortest Path: [Bellman Ford](./CodeSnippets/Graphs/BellmanFord.cpp)
 
 This algorithm also takes into account negative edges but doesn't works with negative cycles.
